@@ -5,21 +5,18 @@
         <title></title>
     </head>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/listnav.js"></script>
   	<script type="text/javascript" src="js/parse.js"></script>
 	<style type="text/css">
-.listNav { margin:0 0 10px; }
-.ln-letters { overflow:hidden; }
-.ln-letters a { font-size:0.9em; display:block; float:left; padding:2px 6px; border:1px solid silver; border-right:none; text-decoration:none; }
-.ln-letters a.ln-last { border-right:1px solid silver; }
-.ln-letters a:hover,
-.ln-letters a.ln-selected { background-color:#eaeaea; }
-.ln-letters a.ln-disabled { color:#ccc; }
-.ln-letter-count { text-align:center; font-size:0.8em; line-height:1; margin-bottom:3px; color:#336699; }
-
-	
-
-	
+		.listNav { margin:0 0 10px; }
+		.ln-letters { overflow:hidden; }
+		.ln-letters a { font-size:0.9em; display:block; float:left; padding:2px 6px; border:1px solid silver; border-right:none; text-decoration:none; }
+		.ln-letters a.ln-last { border-right:1px solid silver; }
+		.ln-letters a:hover,
+		.ln-letters a.ln-selected { background-color:#eaeaea; }
+		.ln-letters a.ln-disabled { color:#ccc; }
+		.ln-letter-count { text-align:center; font-size:0.8em; line-height:1; margin-bottom:3px; color:#336699; }
 	</style>
     <body>
 		
@@ -28,7 +25,10 @@
 			<input type="hidden" name="client" id="client" value="UL_FE_01" />
 			<input type="hidden" name="gsaURL" id="gsaURL" value="http://gsa.uakron.edu/search?" />
 			<input type="hidden" name="output" id="output" value="xml_no_dtd" />
+			<input type="hidden" name="num" id="num" value="1000" />
 			<input type="hidden" name="metaFields" id="metaFields" value="*" />
+			<input type="hidden" name="requiredFields" id="requiredFields" value="" />
+			<input type="hidden" name="filter" id="filter" value="0" />
 			
 			
             <label for="search">Search: </label>
@@ -37,9 +37,12 @@
 			
 			
         </form>
+		<div id="filters">
+			<a href="subject:Philosophy" class="filter">Philosophy</a>
+			<a href="subject:" class="filter"></a>
+		</div>
 				
         <div id="content">
-       <!-- <div id="results-nav" class="listNav"></div> -->
         </div>
 		
 		
