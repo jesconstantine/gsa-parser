@@ -11,9 +11,10 @@ $client = $_POST['client']; // the GSA front-end to use
 $site = $_POST['site']; // the collection to search
 $num = $_POST['num']; // number of results to return per page (set to 1000)
 $output = $_POST['output']; // type of output (set to xml_no_dtd)
+$filter = $_POST['filter'];
 
 // 2. set options
-curl_setopt($ch, CURLOPT_URL, $gsaURL . 'site=' . $site . '&client=' . $client . '&output=' . $output . '&getfields=' . $metaFields . '&num=1000&filter=0&proxyreload=1&requiredfields='. $field .'&q=' . $query);
+curl_setopt($ch, CURLOPT_URL, $gsaURL . 'site=' . $site . '&client=' . $client . '&output=' . $output . '&getfields=' . $metaFields . '&num=' . $num . '&filter=' . $filter . '&requiredfields='. $requiredFields .'&q=' . $query);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1); 
 

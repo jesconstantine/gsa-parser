@@ -6,22 +6,84 @@ $(document).ready(function(){
 		client = $('#client').attr('value');
 		output = $('#output').attr('value');
 		metaFields = $('#metaFields').attr('value');
+		requiredFields = $('#requiredFields').attr('value');
+		num = $('#num').attr('value');
+		filter = $('#filter').attr('value');
+        
+	
+	$('a.filter').click(function(mouseEvent){
+		mouseEvent.preventDefault();
+		var query = $('#query').attr('value');
+		
+		if ($('#filters a').is('.active')) {
+			alert (requiredFields);
+			var rem = $(this).attr('href');
+				rep = '';
+				requiredFields = requiredFields.replace(rem, rep);
+				
+			$('a.filter').removeClass('active');
+			
+			// set AJAX properties and query string variables for curl.php
+			$.ajax({
+				type: "POST",
+				url: "php/curl.php",
+				dataType: "xml",
+				data: {
+					num: num,
+					filter: filter,
+					requiredFields: requiredFields,
+					gsaURL: gsaURL,
+					query: query,
+					site: site,
+					client: client,
+					output: output,
+					metaFields: metaFields
+				},
+				success: parseXML
+			}); // close ajax
+			
+		} else {
+			$('a.filter').addClass('active');
+			alert (requiredFields);
+			requiredFields += $(this).attr('href');
+			
+			// set AJAX properties and query string variables for curl.php
+			$.ajax({
+				type: "POST",
+				url: "php/curl.php",
+				dataType: "xml",
+				data: {
+					num: num,
+					filter: filter,
+					requiredFields: requiredFields,
+					gsaURL: gsaURL,
+					query: query,
+					site: site,
+					client: client,
+					output: output,
+					metaFields: metaFields
+				},
+				success: parseXML
+			}); // close ajax
+		}
+		return false;
+	}); // close click
 	
 	// form which makes an AJAX request to curl.php
 	$('#gsa').submit(function(){
-		
-		$('#results').remove();
-		$('#results-nav').remove();
 		
 		query = $('#query').attr('value');
 		
 		// set AJAX properties and data to send to curl.php
         $.ajax({
             type: "POST",
+			cache: false,
             url: "php/curl.php",
             dataType: "xml",
             data: {
-				cache: false,
+				num: num,
+				filter: filter,
+				requiredFields: requiredFields,
                 gsaURL: gsaURL,
                 query: query,
                 site: site,
@@ -36,6 +98,10 @@ $(document).ready(function(){
 	
 	// parse the XML
     function parseXML(xml){	
+
+		$('#results').remove();
+		$('#results-nav').remove();
+		$('#spelling').remove();
 		// remove the results when a new query is made		
 	
 		// check for spelling suggestions
@@ -47,7 +113,6 @@ $(document).ready(function(){
 					$('#content').append('<h3 id="spelling">Did you mean: <a href="' + suggestion + '" id="suggestion">' + suggestion + '</a>?</h3>');
 				});
 			}); // close find spelling
-			
 			
 			$('#suggestion').click(function(event){
 				// prevent default anchor tag functionality
@@ -63,6 +128,9 @@ $(document).ready(function(){
 		            url: "php/curl.php",
 		            dataType: "xml",
 		            data: {
+						num: num,
+						filter: filter,
+						requiredFields: requiredFields,
 		                gsaURL: gsaURL,
 		                query: query,
 		                site: site,
