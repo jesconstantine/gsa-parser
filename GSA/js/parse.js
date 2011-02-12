@@ -9,20 +9,29 @@ $(document).ready(function(){
 		requiredFields = $('#requiredFields').attr('value');
 		num = $('#num').attr('value');
 		filter = $('#filter').attr('value');
-        
 	
 	$('a.filter').click(function(mouseEvent){
 		mouseEvent.preventDefault();
 		var query = $('#query').attr('value');
+		alert (requiredFields);
 		
-		if ($('#filters a').is('.active')) {
-			alert (requiredFields);
-			var rem = $(this).attr('href');
-				rep = '';
-				requiredFields = requiredFields.replace(rem, rep);
-				
-			$('a.filter').removeClass('active');
+		if ($(this).is('.active')) {
 			
+			
+			if (requiredFields.indexOf("." + $(this).attr('href')) !== -1) {
+				var rep = '';
+				var rem = '.' + $(this).attr('href');
+				requiredFields = requiredFields.replace(rem, rep);
+			} else if (requiredFields.indexOf($(this).attr('href') + ".") !== -1 && requiredFields.indexOf("." + $(this).attr('href')) !== 1 ) {
+				var rem = $(this).attr('href') + '.';
+				var rep = '';
+				requiredFields = requiredFields.replace(rem, rep);
+			} else {
+				var rem = $(this).attr('href');
+				var rep = '';
+				requiredFields = requiredFields.replace(rem, rep);
+			}
+				
 			// set AJAX properties and query string variables for curl.php
 			$.ajax({
 				type: "POST",
@@ -41,10 +50,12 @@ $(document).ready(function(){
 				},
 				success: parseXML
 			}); // close ajax
-			
+			$(this).removeClass('active');
 		} else {
-			$('a.filter').addClass('active');
-			alert (requiredFields);
+			$(this).addClass('active');
+			if (requiredFields.indexOf(":") !== -1) {
+				requiredFields += ".";	
+			}
 			requiredFields += $(this).attr('href');
 			
 			// set AJAX properties and query string variables for curl.php
@@ -65,6 +76,7 @@ $(document).ready(function(){
 				},
 				success: parseXML
 			}); // close ajax
+
 		}
 		return false;
 	}); // close click
