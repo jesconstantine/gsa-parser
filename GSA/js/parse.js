@@ -85,6 +85,7 @@ $(document).ready(function(){
 	$('#gsa').submit(function(){
 		
 		query = $('#query').attr('value');
+		requiredFields = $('#requiredFields').attr('value');
 		
 		// set AJAX properties and data to send to curl.php
         $.ajax({
