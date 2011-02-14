@@ -1,17 +1,3 @@
-function addListItem(obj) {
-   selectedItemId = obj.attr("id") + "_clone";
-   obj.clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
-   obj.hide();
- }
-
-function delListItem(obj) {
-	itemId = obj.attr("id");
-	cloneParentId = itemId.substring(0,itemId.lastIndexOf("_")); 
-	$("#" + itemId).remove();
-	$("#" + cloneParentId).show().children().removeClass('active');
-	
-}
-
 $(document).ready(function(){	
 
 /*================================================================================================
@@ -82,7 +68,6 @@ $(document).ready(function(){
 		
 		return false;
 	});
-	        
 
 	$('a.filter').click(function(mouseEvent){
 		mouseEvent.preventDefault();
@@ -106,27 +91,21 @@ $(document).ready(function(){
 			}
 			
 			// Call the getResults AJAX function
-			
-			
-			//delListItem($(this).parent());
 				
-				itemId = $(this).parent().attr("id");
-				cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
-					
-				alert(itemId);
-				alert(cloneParentId);
-				$("#" + itemId).remove();
-				$("#" + cloneParentId).show();
+			itemId = $(this).parent().attr("id");
+			cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
+				
+			alert(itemId);
+			alert(cloneParentId);
+			$("#" + itemId).remove();
+			$("#" + cloneParentId).show().children().removeClass('active');
 			
 			//remove the active class from the filter
 			
 			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
 			
-			$(this).removeClass('active');
-			
-		// if the filter is inactive, proceed to filter the results	
 			return false;
-			
+		// if the filter is inactive, proceed to filter the results
 		} else {
 			$(this).addClass('active');
 			
@@ -139,7 +118,15 @@ $(document).ready(function(){
 			// Call the getResults AJAX function
 			getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
 			
-			var selectedItemId = $(this).parent().attr("id") + "_clone";
+			// sets a variable based on the href attribute based on the anchor tag's href value
+			var filterHREF = $(this).attr('href');
+				filterHREF = filterHREF.replace(/[^a-zA-Z 0-9]+/g,''); //remove specials from the variable
+			
+			// sets the id of the filter anchor tag to the filterHREF variable 	
+			$(this).parent().attr('id', filterHREF);
+			
+			// appends _clone to the id of the cloned filter anchor tag
+			var selectedItemId = $(this).parent().attr('id') + "_clone";
 			
 			alert(selectedItemId);
    			
