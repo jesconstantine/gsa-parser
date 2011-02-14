@@ -1,6 +1,6 @@
 function addListItem(obj) {
    selectedItemId = obj.attr("id") + "_clone";
-   obj.clone(false).attr("id", selectedItemId ).appendTo($("#selectedItems ul"));
+   obj.clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
    obj.hide();
  }
 
@@ -8,7 +8,8 @@ function delListItem(obj) {
 	itemId = obj.attr("id");
 	cloneParentId = itemId.substring(0,itemId.lastIndexOf("_")); 
 	$("#" + itemId).remove();
-	$("#" + cloneParentId).show();
+	$("#" + cloneParentId).show().children().removeClass('active');
+	
 }
 
 $(document).ready(function(){	
@@ -103,17 +104,29 @@ $(document).ready(function(){
 					var rep = '';
 					requiredFields = requiredFields.replace(rem, rep);
 			}
-
 			
 			// Call the getResults AJAX function
-			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+			
+			
+			//delListItem($(this).parent());
+				
+				itemId = $(this).parent().attr("id");
+				cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
+					
+				alert(itemId);
+				alert(cloneParentId);
+				$("#" + itemId).remove();
+				$("#" + cloneParentId).show();
 			
 			//remove the active class from the filter
+			
+			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+			
 			$(this).removeClass('active');
-			;
+			
 		// if the filter is inactive, proceed to filter the results	
 			return false;
-			delListItem($(this));
+			
 		} else {
 			$(this).addClass('active');
 			
@@ -125,6 +138,14 @@ $(document).ready(function(){
 			
 			// Call the getResults AJAX function
 			getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+			
+			var selectedItemId = $(this).parent().attr("id") + "_clone";
+			
+			alert(selectedItemId);
+   			
+			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
+   			$(this).parent().hide();
+			
 		}
 		return false;
 	}); // close click
