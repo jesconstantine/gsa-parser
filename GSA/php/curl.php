@@ -1,5 +1,7 @@
 <?php
 
+// https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php
+
 $ch = curl_init(); // cURL initialization
 
 #set the search variables
