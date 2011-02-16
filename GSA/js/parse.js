@@ -1,5 +1,7 @@
 $(document).ready(function(){	
-	
+	/* ===============================================================================================
+	 * FILTER LIST SLIDE FUNCTION																	 * 
+	 =============================================================================================== */
 	$('a.slide').addClass('up').parent().children('ul').slideUp();
 	$('a.slide').click(function(mouseEvent){
 		mouseEvent.preventDefault();
@@ -12,7 +14,10 @@ $(document).ready(function(){
 
 		return false;
 	});
-
+	
+	/* ===============================================================================================
+	 * RESET FUNCTION																	 * 
+	 =============================================================================================== */
 	$('a#reset').click(function(mouseEvent){
 		mouseEvent.preventDefault();
 
@@ -20,8 +25,7 @@ $(document).ready(function(){
 		requiredFields = ('');
 		$('#results').remove();
 		$('#results-nav').remove();
-	//	$('#results').fadeOut(1000, function(){$(this).remove();});
-	//	$('#results-nav').fadeOut(1000, function(){$(this).remove();});
+		$('#spelling').remove();
 		
 		return false;
 	});
@@ -83,7 +87,7 @@ $(document).ready(function(){
 	function getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields){
 		$.ajax({
 			type: "POST",
-			url: "php/curl.php",
+			url: "https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php",
 			dataType: "xml",
 			data: {
 				num: num,
