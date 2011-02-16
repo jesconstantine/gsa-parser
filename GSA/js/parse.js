@@ -44,7 +44,6 @@ $(document).ready(function(){
 		});
 		return vars;
 	}
-	
 	// sets a query variable based on the query sent to this page
 	query = getUrlVars()["query"];
 	
@@ -216,11 +215,12 @@ $(document).ready(function(){
 		 =============================================================================================== */
 		
 		if ($(xml).find('Spelling')) {
+			
 			// find and format the spelling suggestion
 			$(xml).find('Spelling').each(function(){
 				$(this).find('Suggestion').each(function(){
 					var suggestion = $(this).attr('q');
-					$('#content').append('<h3 id="spelling">Did you mean: <a href="' + suggestion + '" id="suggestion">' + suggestion + '</a>?</h3>');
+					$('#content').append('<p id="spelling">Did you mean: <a href="' + suggestion + '" id="suggestion">' + suggestion + '</a>?</p>');
 				});
 			}); // close find spelling
 			
@@ -235,7 +235,7 @@ $(document).ready(function(){
 				
 				// Call the getResults AJAX function
 				getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-				
+				$('#results-nav').remove();
 				return false;		
 		    }); //close click 
 		} //close spelling if
