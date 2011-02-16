@@ -1,6 +1,6 @@
 $(document).ready(function(){	
 	
-
+	$('a.slide').addClass('up').parent().children('ul').slideUp();
 	$('a.slide').click(function(mouseEvent){
 		mouseEvent.preventDefault();
 		
@@ -83,7 +83,7 @@ $(document).ready(function(){
 	function getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields){
 		$.ajax({
 			type: "POST",
-			url: "php/curl.php",
+			url: "https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php",
 			dataType: "xml",
 			data: {
 				num: num,
