@@ -7,43 +7,103 @@
 		.ln-letters a.ln-disabled { color:#ccc; }
 		.ln-letter-count { text-align:center; font-size:0.8em; line-height:1; margin-bottom:3px; color:#336699; }
 		
-		ul#filters {
-			display:block;
+		input#search {
+			border:none;
+		}
+		
+		#searchFilters {
+			width:223px;
 			float:left;
 		}
 		
-		ul#filters li {
-			margin-bottom:20px;
+		ul#results li.result li {
+			margin-bottom:10px;	
 		}
 		
-		ul#filters li ul li {
-			margin-bottom:2px;
+		ul#filters li.filterGroup  {
+			margin:0 0 20px 0;
 		}
 		
-		ul#filters li ul {
-			margin-top:5px;
+		ul#filters ul#activeFilters li.filterGroup {
+			margin:0 0 5px 0;
 		}
 		
-		ul {
-			margin:0;
-			padding:0;
-			display:block;
-		}
-		
-		ul li {
+		ul#filters ul.filterList {
 			list-style-type:none;
 			margin:0;
 			padding:0;
+			padding:5px 0 22px 0;
+		}
+		
+		li#activeFilterContainer {
 			display:block;
+			padding:0 5px 5px 5px;
+			margin:10px 0 0 0;
+			border:1px solid #333;
+			background-color:#ccc;
 			
+		}
+		
+		ul#activeFilters ul.filterList {
+			padding:5px 0 0 0;
+
+		}
+		
+		ul#filters ul.filterList li {
+			margin:0 0 5px 0;
+		}	
+		
+		#resultsWrapper li {
+			list-style-type:none;
+			margin:0;
+			padding:0;
+		}
+		
+		#resultsWrapper ul {
+			margin:0;
+			padding:0;
+		}
+				
+		#resultsWrapper ul {
+			list-style-type:none;
+			margin:0;
+			padding:0;
+		}
+		
+		ul#results li.result {
+			margin-bottom:25px;
+			border-bottom:1px solid #ccc;
+		}
+		
+		span.librarianRecommended {
+			margin-left:15px;
+			color: #467E51;
+			font-size: 1.15em;
+			font-style: italic;
+			font-weight: bold;
+			margin-left: 20px;
+		}
+		
+		span.librarianRecommended img {
+			margin-right:5px;
+		}
+		
+		
+		div#resultsWrapper {
+			width:945px;
 		}
 		
 		#content {
 			float:right;
+			width:677px;
 		}
 		
 		a {
 			outline:none;
+		}
+		
+		a:hover {
+			text-decoration:none;
 		}
 		
 		img {

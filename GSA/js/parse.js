@@ -83,7 +83,7 @@ $(document).ready(function(){
 	function getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields){
 		$.ajax({
 			type: "POST",
-			url: "https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php",
+			url: "php/curl.php",
 			dataType: "xml",
 			data: {
 				num: num,
@@ -261,22 +261,22 @@ $(document).ready(function(){
 			
 			$(this).find('MT:[N="subject"]').each(function(){
 				var subjects = $(this).attr('V');
-				html += subjects;
+				html += subjects + ' ';
 			}); //close subjects
             
             if ($(this).find('MT:[N="librarianRecommended"]').attr('V')) {                 
           		html += ' librarianRecommended'
             } 
-			html += '">';	
-			html += '<h3 class="title"><a href="' + url + '" class="url">' + title + '</a>';
-			if ($(this).find('MT:[N="librarianRecommended"]').attr('V')) {
-				html+= '<span class="librarianRecommended"><img src="img/thumbs_up.png" alt="Librarian Recommended" />Librarian Recommended</span></h3>';
-			} else {
-				html+= '</h3>'
-			}
+			html += '">';
 			html += '<ul class="resultDetails">';
+			html += '<li class="title"><a href="' + url + '" class="url">' + title + '</a>';
+			if ($(this).find('MT:[N="librarianRecommended"]').attr('V')) {
+				html+= '<span class="librarianRecommended"><img src="img/thumbs_up.png" alt="Librarian Recommended" />Librarian Recommended</span></li>';
+			} else {
+				html+= '</li>'
+			}
 			html += '<li class="resultSnippet">' + snippet +'</li>';
-			html += '<li><a href="' + detailsURL + '">More Details</a></li>';
+			html += '<li class="moreDetailsURL"><a href="' + detailsURL + '">More Details</a></li>';
 			html += '</ul></li>';	
         }); // close find result
         html += '</ul>'; // close the Results UL
