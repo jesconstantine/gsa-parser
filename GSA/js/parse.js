@@ -1,13 +1,59 @@
 $(document).ready(function(){	
+	
 
-/*================================================================================================
- * VARIABLES
- * 
- * This next block of code sets the search query variables based on the value(s) #query field of a
- * form element, and hidden fields of that form element.
- * 
- * 
- ================================================================================================*/
+	$('a.slide').click(function(mouseEvent){
+		mouseEvent.preventDefault();
+		
+		if ($(this).is('.up')) {
+			$(this).removeClass('up').addClass('down').parent().children('ul').slideDown();
+		} else {			
+			$(this).removeClass('down').addClass('up').parent().children('ul').slideUp();
+		}
+
+		return false;
+	});
+
+	$('a#reset').click(function(mouseEvent){
+		mouseEvent.preventDefault();
+
+		$('#query').val('');
+		requiredFields = ('');
+		$('#results').remove();
+		$('#results-nav').remove();
+	//	$('#results').fadeOut(1000, function(){$(this).remove();});
+	//	$('#results-nav').fadeOut(1000, function(){$(this).remove();});
+		
+		return false;
+	});
+
+	/* ===============================================================================================
+	 * GET URL VARIABLES
+	 * 
+	 * Gets variables passed to this page from another in a URL string
+	 * 
+	 =============================================================================================== */
+
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+			vars[key] = value;
+		});
+		return vars;
+	}
+	
+	// sets a query variable based on the query sent to this page
+	query = getUrlVars()["query"];
+	
+	// sets this page's search query text box value equal to what was passed to this page
+	$('#query').val(query);
+
+	/* ===============================================================================================
+	 * VARIABLES
+	 * 
+	 * This next block of code sets the search query variables based on the value(s) #query field of a
+	 * form element, and hidden fields of that form element.
+	 * 
+	 =============================================================================================== */
 
 	// set GSA query string variables based on hidden form fields
 	var gsaURL = $('#gsaURL').attr('value');
@@ -18,16 +64,20 @@ $(document).ready(function(){
 		requiredFields = $('#requiredFields').attr('value');
 		num = $('#num').attr('value');
 		filter = $('#filter').attr('value');
+		query = $('#query').attr('value');
+		
+		// Parses out the resules based on a query passed to this page from another
+		getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
 
-/*================================================================================================
- *  AJAX FUNCTION
- * 
- * This block of code is responsible for sending the search query data to the PHP cURL, which
- * then sends that data to the GSA, which returns to the search results to the cURL script. The
- * results are then echoed out, by the PHP script, as XML, which is loaded, by this AJAX function,
- * for processesing by the parseXML function *
- *  
- ================================================================================================*/
+	/*================================================================================================
+	 *  AJAX FUNCTION
+	 * 
+	 * This block of code is responsible for sending the search query data to the PHP cURL, which
+	 * then sends that data to the GSA, which returns to the search results to the cURL script. The
+	 * results are then echoed out, by the PHP script, as XML, which is loaded, by this AJAX function,
+	 * for processesing by the parseXML function *
+	 *  
+	 ================================================================================================*/
 		
 	// set AJAX properties and query string variables for curl.php
 	function getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields){
@@ -50,25 +100,13 @@ $(document).ready(function(){
 		}); // close ajax
 	}
 
-/* ================================================================================================
- * FILTER CLICK FUNCTION
- * 
- * This function handles the functionality of the filter anchor-tag-based elements.
- * 
- =============================================================================================== */	
-	$('a#reset').click(function(mouseEvent){
-		mouseEvent.preventDefault();
-
-		$('#query').val('');
-		requiredFields = ('');
-		$('#results').remove();
-		$('#results-nav').remove();
-	//	$('#results').fadeOut(1000, function(){$(this).remove();});
-	//	$('#results-nav').fadeOut(1000, function(){$(this).remove();});
-		
-		return false;
-	});
-
+	/* ================================================================================================
+	 * FILTER CLICK FUNCTION
+	 * 
+	 * This function handles the functionality of the filter anchor-tag-based elements.
+	 * 
+	 =============================================================================================== */
+	
 	$('a.filter').click(function(mouseEvent){
 		mouseEvent.preventDefault();
 		var query = $('#query').attr('value');
@@ -95,8 +133,6 @@ $(document).ready(function(){
 			itemId = $(this).parent().attr("id");
 			cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
 				
-			alert(itemId);
-			alert(cloneParentId);
 			$("#" + itemId).remove();
 			$("#" + cloneParentId).show().children().removeClass('active');
 			
@@ -127,8 +163,6 @@ $(document).ready(function(){
 			
 			// appends _clone to the id of the cloned filter anchor tag
 			var selectedItemId = $(this).parent().attr('id') + "_clone";
-			
-			alert(selectedItemId);
    			
 			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
    			$(this).parent().hide();
