@@ -4,9 +4,12 @@
 
 $ch = curl_init(); // cURL initialization
 
+#set the search query and replace specials
+$query = $_POST['query']; // the search query
+$query = str_replace(' ', '%20', $query);
+
 #set the search variables
 $gsaURL = $_POST['gsaURL']; // the URL of the GSA
-$query = $_POST['query']; // the search query
 $requiredFields = $_POST['requiredFields']; // filter meta tag fields
 $metaFields = $_POST['metaFields']; // meta tag fields
 $client = $_POST['client']; // the GSA front-end to use

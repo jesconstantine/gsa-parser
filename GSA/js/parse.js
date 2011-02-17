@@ -11,7 +11,6 @@ $(document).ready(function(){
 		} else {			
 			$(this).removeClass('down').addClass('up').parent().children('ul').slideUp();
 		}
-
 		return false;
 	});
 	
@@ -86,7 +85,7 @@ $(document).ready(function(){
 	function getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields){
 		$.ajax({
 			type: "POST",
-			url: "https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php",
+			url: "php/curl.php",
 			dataType: "xml",
 			data: {
 				num: num,
