@@ -3,16 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js">
-        </script>
-        <script type="text/javascript" src="js/listnav.js">
-        </script>
-        <script type="text/javascript" src="js/parse.js">
-        </script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+        <script type="text/javascript" src="js/listnav.js"></script>
+		<script type="text/javascript" src="js/tinysort.js"></script>
+        <script type="text/javascript" src="js/parse.js"></script>
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
         <div id="resultsWrapper">
+        	<a href="javascript:;" class="alphaSort">Sort Alphabetically</a>
+				<a href="javascript:;" class="consoleLog">LOG</a>
             <div id="searchFilters">
                 <div id="search">
                     <form action="https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php" name="gsa" id="gsa" method="POST">
@@ -58,7 +58,7 @@
                                 <a class="filter" href="research:Electronic%20Books">Electronic Books </a>
                             </li>
                             <li>
-                                <a class="filter" href="research:Encyclopedias">Encyclopedias</a>
+                                <a class="filter" href="research:Encyclopedias%20">Encyclopedias</a>
                             </li>
                             <li>
                                 <a class="filter" href="research:Images">Images</a>

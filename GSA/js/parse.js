@@ -1,4 +1,24 @@
 $(document).ready(function(){	
+
+	/* ===============================================================================================
+	 * REMOVE DUPLICATE ELEMENTS FUNCTION																	 * 
+	 =============================================================================================== */
+
+		function removeDuplicateElement(arrayName)
+	      {
+	        var newArray = new Array();
+	        label:for(var i=0; i<arrayName.length;i++ )
+	        {  
+	          for(var j=0; j<newArray.length;j++ )
+	          {
+	            if(newArray[j]==arrayName[i]) 
+	            continue label;
+	          }
+	          newArray[newArray.length] = arrayName[i];
+	        }
+	        return newArray;
+	      }
+
 	/* ===============================================================================================
 	 * FILTER LIST SLIDE FUNCTION																	 * 
 	 =============================================================================================== */
@@ -183,6 +203,8 @@ $(document).ready(function(){
 	$('#gsa').submit(function(){
 		
 		query = $('#query').attr('value');
+		query = query.replace(/ /g, '%20');
+		query = query.replace(/\'/g, "%27");
 		requiredFields = $('#requiredFields').attr('value');
 		
 		// Call the getResults AJAX function
@@ -229,6 +251,8 @@ $(document).ready(function(){
 				
 				// set the search query to the href property of the query suggestion anchor tag
 				query = $(this).attr('href');
+				query = query.replace(/ /g, '%20');
+				query = query.replace(/\'/g, "%27");
 				// set the text in the search query field to the value of the query variable
 				$('#query').val(query);
 				
@@ -242,7 +266,8 @@ $(document).ready(function(){
 		/* ================================================================================================
 		 * PARSE RESULTS IF NO SPELLING ERRORS ARE FOUND
 		 ================================================================================================ */
-		
+		var	toolList = [];
+
 		var html = '<div id="results-nav" class="listNav"></div>';
 		//open the Results UL
 		html += '<ul id="results">';
@@ -254,12 +279,22 @@ $(document).ready(function(){
 				snippet = $(this).find('S').text();
 				inode = $(this).find('MT:[N="inode"]').attr('V');
 				detailsURL = 'https://www.uakron.edu/libraries/bierce_scitech/research_tools/research_tools_detail.dot?id=' + inode;
+			
+		
+			
+			$(this).find('MT:[N="research"]').each(function(){
+				
+				var tool = $(this).attr('V');
+					tool = tool.trim().replace(/ /g, '%20').toLowerCase();
+					toolList.push(tool);
+			});				
 				
 			html += '<li class="result ';
-				
+							
 			$(this).find('MT:[N="research"]').each(function(){
 				var toolTypes = $(this).attr('V');
 				html += toolTypes + ' ';
+		
 			}); // close toolTypes
 			
 			$(this).find('MT:[N="subject"]').each(function(){
@@ -280,12 +315,18 @@ $(document).ready(function(){
 			}
 			html += '<li class="resultSnippet">' + snippet +'</li>';
 			html += '<li class="moreDetailsURL"><a href="' + detailsURL + '">More Details</a></li>';
-			html += '</ul></li>';	
+			html += '</ul></li>';
+			return toolList;
+			
         }); // close find result
+        
+		console.log(removeDuplicateElement(toolList));
+        
         html += '</ul>'; // close the Results UL
         
+		
 		//append the results to the #content DIV
-		$('#content').append(html); 
-		$('#results').listnav();		
+		$('#content').append(html);
     } // close parseXML
+
 }); // close docready
