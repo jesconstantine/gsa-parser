@@ -1,11 +1,4 @@
 $(document).ready(function(){
-	
- $(window).bind( "hashchange", function(e) {
-  // In jQuery 1.4, use e.getState( "url" );
-   var url = $.bbq.getState( "requiredFields" );
-   alert(url);
-
-  });
 
 
 	/* ===============================================================================================
@@ -166,12 +159,7 @@ $(document).ready(function(){
 			cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
 				
 			$("#" + itemId).remove();
-			$("#" + cloneParentId).show().children().removeClass('active');
-			
-			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-			
-			//remove the active class from the filter
-			
+			$("#" + cloneParentId).show().children().removeClass('active');				
 			
 			return false;
 		// if the filter is inactive, proceed to filter the results
@@ -182,12 +170,12 @@ $(document).ready(function(){
 			if (requiredFields.indexOf(":") !== -1) {
 				requiredFields += ".";	
 			}
-			requiredFields += $(this).attr('href');
 			
+			requiredFields += $(this).attr('href');
 			$.bbq.pushState({ query: query, requiredFields: requiredFields });
 			
 			// Call the getResults AJAX function
-			getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+			//getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
 			
 			// sets a variable based on the href attribute based on the anchor tag's href value
 			var filterHREF = $(this).attr('href');
@@ -202,6 +190,13 @@ $(document).ready(function(){
 			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
    			$(this).parent().hide();	
 		}
+		
+		$(window).bind( "hashchange", function(e) {
+  				// In jQuery 1.4, use e.getState( "url" );
+	 			var requiredFields = $.bbq.getState( "requiredFields" );
+					query = $.bbq.getState("query");   
+					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+		});
 		
 		return false;
 	}); // close click
@@ -218,10 +213,15 @@ $(document).ready(function(){
 		query = $('#query').attr('value');
 		query = query.replace(/ /g, '%20');
 		query = query.replace(/\'/g, "%27");
-		requiredFields = $('#requiredFields').attr('value');
-		
+		//requiredFields = $('#requiredFields').attr('value');
+		$.bbq.pushState({ query: query, requiredFields: requiredFields });
 		// Call the getResults AJAX function
-		getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+		$(window).bind( "hashchange", function(e) {
+  				// In jQuery 1.4, use e.getState( "url" );
+	 			var requiredFields = $.bbq.getState("requiredFields");
+					query = $.bbq.getState("query");   
+					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+		});
 		return false;
     }); // close form
 	
