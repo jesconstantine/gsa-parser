@@ -6,7 +6,8 @@ $ch = curl_init(); // cURL initialization
 
 #set the search query and replace specials
 $query = $_POST['query']; // the search query
-$query = str_replace(' ', '%20', $query);
+#$query = str_replace(' ', '%20', $query);
+#$query = str_replace("'", "%27", $query);
 
 #set the search variables
 $gsaURL = $_POST['gsaURL']; // the URL of the GSA
