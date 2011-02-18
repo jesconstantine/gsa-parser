@@ -267,6 +267,7 @@ $(document).ready(function(){
 		 * PARSE RESULTS IF NO SPELLING ERRORS ARE FOUND
 		 ================================================================================================ */
 		var	toolList = [];
+			subjectList = [];
 
 		var html = '<div id="results-nav" class="listNav"></div>';
 		//open the Results UL
@@ -280,25 +281,21 @@ $(document).ready(function(){
 				inode = $(this).find('MT:[N="inode"]').attr('V');
 				detailsURL = 'https://www.uakron.edu/libraries/bierce_scitech/research_tools/research_tools_detail.dot?id=' + inode;
 			
-		
-			
-			$(this).find('MT:[N="research"]').each(function(){
-				
-				var tool = $(this).attr('V');
-					tool = tool.trim().replace(/ /g, '%20').toLowerCase();
-					toolList.push(tool);
-			});				
 				
 			html += '<li class="result ';
 							
 			$(this).find('MT:[N="research"]').each(function(){
 				var toolTypes = $(this).attr('V');
+					tool = 'research:' + toolTypes.trim().replace(/ /g, '%20').toLowerCase();
+					toolList.push(tool);
 				html += toolTypes + ' ';
 		
 			}); // close toolTypes
 			
 			$(this).find('MT:[N="subject"]').each(function(){
 				var subjects = $(this).attr('V');
+					subject = 'subject:' + subjects.trim().replace(/ /g, '%20').toLowerCase();
+					subjectList.push(subject);
 				html += subjects + ' ';
 			}); //close subjects
             
@@ -321,6 +318,7 @@ $(document).ready(function(){
         }); // close find result
         
 		console.log(removeDuplicateElement(toolList));
+		console.log(removeDuplicateElement(subjectList));
         
         html += '</ul>'; // close the Results UL
         
