@@ -1,4 +1,12 @@
-$(document).ready(function(){	
+$(document).ready(function(){
+	
+ $(window).bind( "hashchange", function(e) {
+  // In jQuery 1.4, use e.getState( "url" );
+   var url = $.bbq.getState( "requiredFields" );
+   alert(url);
+
+  });
+
 
 	/* ===============================================================================================
 	 * REMOVE DUPLICATE ELEMENTS FUNCTION																	 * 
@@ -150,6 +158,8 @@ $(document).ready(function(){
 					requiredFields = requiredFields.replace(rem, rep);
 			}
 			
+			$.bbq.pushState({ query: query, requiredFields: requiredFields });
+			
 			// Call the getResults AJAX function
 				
 			itemId = $(this).parent().attr("id");
@@ -158,9 +168,10 @@ $(document).ready(function(){
 			$("#" + itemId).remove();
 			$("#" + cloneParentId).show().children().removeClass('active');
 			
+			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+			
 			//remove the active class from the filter
 			
-			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
 			
 			return false;
 		// if the filter is inactive, proceed to filter the results
@@ -172,6 +183,8 @@ $(document).ready(function(){
 				requiredFields += ".";	
 			}
 			requiredFields += $(this).attr('href');
+			
+			$.bbq.pushState({ query: query, requiredFields: requiredFields });
 			
 			// Call the getResults AJAX function
 			getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
@@ -187,9 +200,9 @@ $(document).ready(function(){
 			var selectedItemId = $(this).parent().attr('id') + "_clone";
    			
 			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
-   			$(this).parent().hide();
-			
+   			$(this).parent().hide();	
 		}
+		
 		return false;
 	}); // close click
 	
@@ -326,5 +339,5 @@ $(document).ready(function(){
 		//append the results to the #content DIV
 		$('#content').append(html);
     } // close parseXML
-
+$(window).trigger( "hashchange" );
 }); // close docready
