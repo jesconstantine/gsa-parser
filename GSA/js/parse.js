@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$(window).trigger( "hashchange" );
+		
 	/* ===============================================================================================
 	 * REMOVE DUPLICATE ELEMENTS FUNCTION																	 * 
 	 =============================================================================================== */
@@ -185,14 +185,14 @@ $(document).ready(function(){
    			$(this).parent().hide();	
 		}
 		
-		$(window).bind( "hashchange", function(e) {
+	/*	$(window).bind( "hashchange", function(e) {
   				// In jQuery 1.4, use e.getState( "url" );
 	 			var requiredFields = $.bbq.getState( "requiredFields" );
 					//set the query to the URL hash of query
 					query = $.bbq.getState("query");
 					//call the getResults function   
 					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-		});
+		}); */
 		
 		return false;
 	}); // close click
@@ -243,14 +243,14 @@ $(document).ready(function(){
 				
 				$.bbq.pushState({query: query});
 								
-				$(window).bind( "hashchange", function(e) {
+			/*	$(window).bind( "hashchange", function(e) {
   					// In jQuery 1.4, use e.getState( "url" );
 	 				var requiredFields = $.bbq.getState( "requiredFields" );
 						//set the query to the URL hash of query
 						query = $.bbq.getState("query");
 					//call the getResults function   
 					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-				});				
+				}); */				
 				
 				$('#results-nav').remove();
 				return false;		
@@ -359,5 +359,14 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	$(window).bind( "hashchange", function(e) {
+			// In jQuery 1.4, use e.getState( "url" );
+			var requiredFields = e.getState("requiredFields");
+			query = e.getState("query");   
+			// Call the getResults AJAX function
+			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+	});
+	
+	$(window).trigger( "hashchange" );
 
-}); // close docready
+});
