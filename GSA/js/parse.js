@@ -1,10 +1,4 @@
 $(document).ready(function(){
-		
-	$(window).bind( "hashchange", function(e) {
-		var filters = e.getState("activeFilters");		   
-		console.log(filters);
-
-	});	
 	
 	/* ===============================================================================================
 	 * REMOVE DUPLICATE ELEMENTS FUNCTION																	 * 
@@ -127,6 +121,7 @@ $(document).ready(function(){
 	$('a.filter').live('click', function(mouseEvent){
 		mouseEvent.preventDefault();
 		var query = $('#query').attr('value');
+			filterTEXT = $(this).text();
 		
 		// Checks to see if the filter has an active class
 		if ($(this).is('.active')) {
@@ -145,8 +140,13 @@ $(document).ready(function(){
 					requiredFields = requiredFields.replace(rem, rep);
 			}
 			
-			$.bbq.pushState({requiredFields: requiredFields });
-							
+			//removes filters from active filter array
+			activeFilters = $.grep(activeFilters, function(value){
+				return value != filterTEXT;
+			});
+			
+			$.bbq.pushState({ query: query, requiredFields: requiredFields });
+						
 			itemId = $(this).parent().attr("id");
 			cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
 				
@@ -158,9 +158,8 @@ $(document).ready(function(){
 		} else {
 			$(this).addClass('active');
   			
-			var activeFilter = $.trim($(this).text());
-				activeFilters.push(activeFilter);
-				console.log(activeFilters);		
+				var activeFilter = $.trim($(this).text());
+					activeFilters.push(activeFilter);		
 						
 			// checks to see if there is already a filter in the query string and if it is, it adds a period between the new filter and itself
 			if (requiredFields.indexOf(":") !== -1) {
@@ -168,7 +167,7 @@ $(document).ready(function(){
 			}
 			requiredFields += $(this).attr('href');
 			
-			$.bbq.pushState({requiredFields: requiredFields, activeFilters: activeFilters });
+			$.bbq.pushState({ query: query, requiredFields: requiredFields });
 			
 			// Call the getResults AJAX function
 			//getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
@@ -186,6 +185,7 @@ $(document).ready(function(){
 			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
    			$(this).parent().hide();	
 		}
+
 		return false;
 	}); // close click
 	
@@ -267,7 +267,7 @@ $(document).ready(function(){
 				//checks to see if the toolType is in an active filter, and adds it to the toolList array if it isn't
 				if ($.inArray(toolTypes, activeFilters) === -1) {
 						toolList.push(toolTypes);
-					}
+					} 
 				html += toolTypes + ' ';
 		
 			}); // close toolTypes
@@ -311,7 +311,7 @@ $(document).ready(function(){
 				
 			$('#listOfToolFilters').append(listItem);
 		});
-		
+		console.log(activeFilters);
 		$('ul.filterList>li').tinysort();
     } // close parseXML
 
