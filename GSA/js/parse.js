@@ -145,10 +145,8 @@ $(document).ready(function(){
 					requiredFields = requiredFields.replace(rem, rep);
 			}
 			
-			$.bbq.pushState({ query: query, requiredFields: requiredFields });
-			
-			// Call the getResults AJAX function
-				
+			$.bbq.pushState({requiredFields: requiredFields });
+							
 			itemId = $(this).parent().attr("id");
 			cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
 				
@@ -160,8 +158,9 @@ $(document).ready(function(){
 		} else {
 			$(this).addClass('active');
   			
-				var activeFilter = $.trim($(this).text());
-					activeFilters.push(activeFilter);		
+			var activeFilter = $.trim($(this).text());
+				activeFilters.push(activeFilter);
+				console.log(activeFilters);		
 						
 			// checks to see if there is already a filter in the query string and if it is, it adds a period between the new filter and itself
 			if (requiredFields.indexOf(":") !== -1) {
@@ -169,7 +168,7 @@ $(document).ready(function(){
 			}
 			requiredFields += $(this).attr('href');
 			
-			$.bbq.pushState({ query: query, requiredFields: requiredFields, activeFilters: activeFilters });
+			$.bbq.pushState({requiredFields: requiredFields, activeFilters: activeFilters });
 			
 			// Call the getResults AJAX function
 			//getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
@@ -187,7 +186,6 @@ $(document).ready(function(){
 			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
    			$(this).parent().hide();	
 		}
-
 		return false;
 	}); // close click
 	
