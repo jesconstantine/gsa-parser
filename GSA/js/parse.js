@@ -1,54 +1,23 @@
 $(document).ready(function(){
-
-
+	$(window).trigger( "hashchange" );
 	/* ===============================================================================================
 	 * REMOVE DUPLICATE ELEMENTS FUNCTION																	 * 
 	 =============================================================================================== */
 
-		function removeDuplicateElement(arrayName)
-	      {
-	        var newArray = new Array();
-	        label:for(var i=0; i<arrayName.length;i++ )
-	        {  
-	          for(var j=0; j<newArray.length;j++ )
-	          {
-	            if(newArray[j]==arrayName[i]) 
-	            continue label;
-	          }
-	          newArray[newArray.length] = arrayName[i];
-	        }
-	        return newArray;
-	      }
-
-	/* ===============================================================================================
-	 * FILTER LIST SLIDE FUNCTION																	 * 
-	 =============================================================================================== */
-	$('a.slide').addClass('up').parent().children('ul').slideUp();
-	$('a.slide').click(function(mouseEvent){
-		mouseEvent.preventDefault();
-		
-		if ($(this).is('.up')) {
-			$(this).removeClass('up').addClass('down').parent().children('ul').slideDown();
-		} else {			
-			$(this).removeClass('down').addClass('up').parent().children('ul').slideUp();
-		}
-		return false;
-	});
-	
-	/* ===============================================================================================
-	 * RESET FUNCTION																	 * 
-	 =============================================================================================== */
-	$('a#reset').click(function(mouseEvent){
-		mouseEvent.preventDefault();
-
-		$('#query').val('');
-		requiredFields = ('');
-		$('#results').remove();
-		$('#results-nav').remove();
-		$('#spelling').remove();
-		
-		return false;
-	});
+	function removeDuplicateElement(arrayName)
+      {
+        var newArray = new Array();
+        label:for(var i=0; i<arrayName.length;i++ )
+        {  
+          for(var j=0; j<newArray.length;j++ )
+          {
+            if(newArray[j]==arrayName[i]) 
+            continue label;
+          }
+          newArray[newArray.length] = arrayName[i];
+        }
+        return newArray;
+      }
 
 	/* ===============================================================================================
 	 * GET URL VARIABLES
@@ -117,11 +86,36 @@ $(document).ready(function(){
 				site: site,
 				client: client,
 				output: output,
-				metaFields: metaFields
+				metaFields: metaFields,
 			},
 			success: parseXML
 		}); // close ajax
 	}
+	
+	/* ================================================================================================
+	 * FORM SUBMISSION FUNCTION
+	 * 
+	 * This function handles the form-submission functionality
+	 * 
+	 =============================================================================================== */
+	
+	$('#gsa').submit(function(){
+		
+		query = $('#query').attr('value');
+		query = query.replace(/ /g, '%20');
+		query = query.replace(/\'/g, "%27");
+		//requiredFields = $('#requiredFields').attr('value');
+		$.bbq.pushState({ query: query, requiredFields: requiredFields });
+		//check for a hash-change in the URL
+		$(window).bind( "hashchange", function(e) {
+  				// In jQuery 1.4, use e.getState( "url" );
+	 			var requiredFields = $.bbq.getState("requiredFields");
+					query = $.bbq.getState("query");   
+					// Call the getResults AJAX function
+					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+		});
+		return false;
+    }); // close form
 
 	/* ================================================================================================
 	 * FILTER CLICK FUNCTION
@@ -130,7 +124,7 @@ $(document).ready(function(){
 	 * 
 	 =============================================================================================== */
 	
-	$('a.filter').click(function(mouseEvent){
+	$('a.filter').live('click', function(mouseEvent){
 		mouseEvent.preventDefault();
 		var query = $('#query').attr('value');
 		
@@ -194,36 +188,14 @@ $(document).ready(function(){
 		$(window).bind( "hashchange", function(e) {
   				// In jQuery 1.4, use e.getState( "url" );
 	 			var requiredFields = $.bbq.getState( "requiredFields" );
-					query = $.bbq.getState("query");   
+					//set the query to the URL hash of query
+					query = $.bbq.getState("query");
+					//call the getResults function   
 					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
 		});
 		
 		return false;
 	}); // close click
-	
-	/* ================================================================================================
-	 * FORM SUBMISSION FUNCTION
-	 * 
-	 * This function handles the form-submission functionality
-	 * 
-	 =============================================================================================== */
-	
-	$('#gsa').submit(function(){
-		
-		query = $('#query').attr('value');
-		query = query.replace(/ /g, '%20');
-		query = query.replace(/\'/g, "%27");
-		//requiredFields = $('#requiredFields').attr('value');
-		$.bbq.pushState({ query: query, requiredFields: requiredFields });
-		// Call the getResults AJAX function
-		$(window).bind( "hashchange", function(e) {
-  				// In jQuery 1.4, use e.getState( "url" );
-	 			var requiredFields = $.bbq.getState("requiredFields");
-					query = $.bbq.getState("query");   
-					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-		});
-		return false;
-    }); // close form
 	
 	/* ================================================================================================
 	 * 
@@ -269,8 +241,17 @@ $(document).ready(function(){
 				// set the text in the search query field to the value of the query variable
 				$('#query').val(query);
 				
-				// Call the getResults AJAX function
-				getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+				$.bbq.pushState({query: query});
+								
+				$(window).bind( "hashchange", function(e) {
+  					// In jQuery 1.4, use e.getState( "url" );
+	 				var requiredFields = $.bbq.getState( "requiredFields" );
+						//set the query to the URL hash of query
+						query = $.bbq.getState("query");
+					//call the getResults function   
+					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+				});				
+				
 				$('#results-nav').remove();
 				return false;		
 		    }); //close click 
@@ -299,15 +280,15 @@ $(document).ready(function(){
 							
 			$(this).find('MT:[N="research"]').each(function(){
 				var toolTypes = $(this).attr('V');
-					tool = 'research:' + toolTypes.trim().replace(/ /g, '%20').toLowerCase();
-					toolList.push(tool);
+					//tool = toolTypes.trim().replace(/ /g, '%20').toLowerCase();
+					toolList.push(toolTypes);
 				html += toolTypes + ' ';
 		
 			}); // close toolTypes
 			
 			$(this).find('MT:[N="subject"]').each(function(){
 				var subjects = $(this).attr('V');
-					subject = 'subject:' + subjects.trim().replace(/ /g, '%20').toLowerCase();
+					subject = subjects.replace(/ /g, '%20').toLowerCase();
 					subjectList.push(subject);
 				html += subjects + ' ';
 			}); //close subjects
@@ -326,18 +307,57 @@ $(document).ready(function(){
 			html += '<li class="resultSnippet">' + snippet +'</li>';
 			html += '<li class="moreDetailsURL"><a href="' + detailsURL + '">More Details</a></li>';
 			html += '</ul></li>';
-			return toolList;
+			
 			
         }); // close find result
-        
-		console.log(removeDuplicateElement(toolList));
-		console.log(removeDuplicateElement(subjectList));
-        
         html += '</ul>'; // close the Results UL
-        
-		
 		//append the results to the #content DIV
 		$('#content').append(html);
+		
+		var listOfTools = removeDuplicateElement(toolList);
+			listOfSubjects = removeDuplicateElement(subjectList);
+
+		// loops through the array of research tool types
+		$.each(listOfTools, function(itemIndex, toolName){
+			var	toolHREF = $.trim(toolName);
+				toolHREF = toolHREF.replace(/ /g, '%20').toLowerCase(); //URL encodes spaces
+				listItem = '<li><a class="filter" href="research:' + toolHREF + '">' + toolName + '</a></li>';
+				
+			$('#listOfToolFilters').append(listItem);
+		});
+		
+		
     } // close parseXML
-$(window).trigger( "hashchange" );
+    
+	/* ===============================================================================================
+	 * FILTER LIST SLIDE FUNCTION																	 * 
+	 =============================================================================================== */
+	$('a.slide').addClass('up').parent().children('ul').slideUp();
+	$('a.slide').click(function(mouseEvent){
+		mouseEvent.preventDefault();
+		
+		if ($(this).is('.up')) {
+			$(this).removeClass('up').addClass('down').parent().children('ul').slideDown();
+		} else {			
+			$(this).removeClass('down').addClass('up').parent().children('ul').slideUp();
+		}
+		return false;
+	});
+	
+	/* ===============================================================================================
+	 * RESET FUNCTION																				 * 
+	 =============================================================================================== */
+	$('a#reset').click(function(mouseEvent){
+		mouseEvent.preventDefault();
+
+		$('#query').val('');
+		requiredFields = ('');
+		$('#results').remove();
+		$('#results-nav').remove();
+		$('#spelling').remove();
+		
+		return false;
+	});
+	
+
 }); // close docready
