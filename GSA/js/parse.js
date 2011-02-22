@@ -1,5 +1,11 @@
 $(document).ready(function(){
 		
+	$(window).bind( "hashchange", function(e) {
+		var filters = e.getState("activeFilters");		   
+		console.log(filters);
+
+	});	
+	
 	/* ===============================================================================================
 	 * REMOVE DUPLICATE ELEMENTS FUNCTION																	 * 
 	 =============================================================================================== */
@@ -107,13 +113,7 @@ $(document).ready(function(){
 		//requiredFields = $('#requiredFields').attr('value');
 		$.bbq.pushState({ query: query, requiredFields: requiredFields });
 		//check for a hash-change in the URL
-		$(window).bind( "hashchange", function(e) {
-  				// In jQuery 1.4, use e.getState( "url" );
-	 			var requiredFields = $.bbq.getState("requiredFields");
-					query = $.bbq.getState("query");   
-					// Call the getResults AJAX function
-					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-		});
+
 		return false;
     }); // close form
 
@@ -123,7 +123,7 @@ $(document).ready(function(){
 	 * This function handles the functionality of the filter anchor-tag-based elements.
 	 * 
 	 =============================================================================================== */
-	
+	var activeFilters = [];
 	$('a.filter').live('click', function(mouseEvent){
 		mouseEvent.preventDefault();
 		var query = $('#query').attr('value');
@@ -159,14 +159,17 @@ $(document).ready(function(){
 		// if the filter is inactive, proceed to filter the results
 		} else {
 			$(this).addClass('active');
-			
+  			
+				var activeFilter = $.trim($(this).text());
+					activeFilters.push(activeFilter);		
+						
 			// checks to see if there is already a filter in the query string and if it is, it adds a period between the new filter and itself
 			if (requiredFields.indexOf(":") !== -1) {
 				requiredFields += ".";	
 			}
-			
 			requiredFields += $(this).attr('href');
-			$.bbq.pushState({ query: query, requiredFields: requiredFields });
+			
+			$.bbq.pushState({ query: query, requiredFields: requiredFields, activeFilters: activeFilters });
 			
 			// Call the getResults AJAX function
 			//getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
@@ -184,16 +187,7 @@ $(document).ready(function(){
 			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
    			$(this).parent().hide();	
 		}
-		
-	/*	$(window).bind( "hashchange", function(e) {
-  				// In jQuery 1.4, use e.getState( "url" );
-	 			var requiredFields = $.bbq.getState( "requiredFields" );
-					//set the query to the URL hash of query
-					query = $.bbq.getState("query");
-					//call the getResults function   
-					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-		}); */
-		
+
 		return false;
 	}); // close click
 	
@@ -208,6 +202,8 @@ $(document).ready(function(){
 	// parse the XML
     function parseXML(xml){	
 		
+		$('ul#listOfToolFilters>li').remove();
+		$('ul#listOfSubjectFilters>li').remove();
 		$('#results').remove();
 		$('#results-nav').remove();
 		$('#spelling').remove();
@@ -242,15 +238,6 @@ $(document).ready(function(){
 				$('#query').val(query);
 				
 				$.bbq.pushState({query: query});
-								
-			/*	$(window).bind( "hashchange", function(e) {
-  					// In jQuery 1.4, use e.getState( "url" );
-	 				var requiredFields = $.bbq.getState( "requiredFields" );
-						//set the query to the URL hash of query
-						query = $.bbq.getState("query");
-					//call the getResults function   
-					getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-				}); */				
 				
 				$('#results-nav').remove();
 				return false;		
@@ -274,14 +261,15 @@ $(document).ready(function(){
 				snippet = $(this).find('S').text();
 				inode = $(this).find('MT:[N="inode"]').attr('V');
 				detailsURL = 'https://www.uakron.edu/libraries/bierce_scitech/research_tools/research_tools_detail.dot?id=' + inode;
-			
 				
 			html += '<li class="result ';
 							
 			$(this).find('MT:[N="research"]').each(function(){
-				var toolTypes = $(this).attr('V');
-					//tool = toolTypes.trim().replace(/ /g, '%20').toLowerCase();
-					toolList.push(toolTypes);
+				var toolTypes = $.trim($(this).attr('V'));
+				//checks to see if the toolType is in an active filter, and adds it to the toolList array if it isn't
+				if ($.inArray(toolTypes, activeFilters) === -1) {
+						toolList.push(toolTypes);
+					}
 				html += toolTypes + ' ';
 		
 			}); // close toolTypes
@@ -289,6 +277,7 @@ $(document).ready(function(){
 			$(this).find('MT:[N="subject"]').each(function(){
 				var subjects = $(this).attr('V');
 					subject = subjects.replace(/ /g, '%20').toLowerCase();
+					
 					subjectList.push(subject);
 				html += subjects + ' ';
 			}); //close subjects
@@ -319,15 +308,17 @@ $(document).ready(function(){
 
 		// loops through the array of research tool types
 		$.each(listOfTools, function(itemIndex, toolName){
-			var	toolHREF = $.trim(toolName);
-				toolHREF = toolHREF.replace(/ /g, '%20').toLowerCase(); //URL encodes spaces
+			var	toolHREF = toolName.replace(/ /g, '%20').toLowerCase(); //URL encodes spaces
 				listItem = '<li><a class="filter" href="research:' + toolHREF + '">' + toolName + '</a></li>';
 				
 			$('#listOfToolFilters').append(listItem);
 		});
 		
-		
+		$('ul.filterList>li').tinysort();
     } // close parseXML
+
+	
+
     
 	/* ===============================================================================================
 	 * FILTER LIST SLIDE FUNCTION																	 * 
@@ -360,7 +351,6 @@ $(document).ready(function(){
 	});
 	
 	$(window).bind( "hashchange", function(e) {
-			// In jQuery 1.4, use e.getState( "url" );
 			var requiredFields = e.getState("requiredFields");
 			query = e.getState("query");   
 			// Call the getResults AJAX function
