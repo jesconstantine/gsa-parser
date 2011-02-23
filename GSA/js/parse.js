@@ -1,43 +1,35 @@
-$(document).ready(function(){
-	
-	/* ===============================================================================================
-	 * REMOVE DUPLICATE ELEMENTS FUNCTION																	 * 
-	 =============================================================================================== */
+/* ===============================================================================================
+ * REMOVE DUPLICATE ELEMENTS FUNCTION															 *
+ =============================================================================================== */
 
-	function removeDuplicateElement(arrayName)
-      {
-        var newArray = new Array();
-        label:for(var i=0; i<arrayName.length;i++ )
-        {  
-          for(var j=0; j<newArray.length;j++ )
-          {
-            if(newArray[j]==arrayName[i]) 
-            continue label;
-          }
-          newArray[newArray.length] = arrayName[i];
+function removeDuplicateElement(arrayName){
+    var newArray = new Array();
+    label: for (var i = 0; i < arrayName.length; i++) {
+        for (var j = 0; j < newArray.length; j++) {
+            if (newArray[j] == arrayName[i]) 
+                continue label;
         }
-        return newArray;
-      }
+        newArray[newArray.length] = arrayName[i];
+    }
+    return newArray;
+}
 
-	/* ===============================================================================================
-	 * GET URL VARIABLES
-	 * 
-	 * Gets variables passed to this page from another in a URL string
-	 * 
-	 =============================================================================================== */
+/* ===============================================================================================
+ * GET URL VARIABLES
+ *
+ * Gets variables passed to this page from another in a URL string
+ *
+ =============================================================================================== */
+function getUrlVars(){
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value){
+        vars[key] = value;
+		
+    });
+    return vars;
+}
 
-	function getUrlVars() {
-		var vars = {};
-		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-			vars[key] = value;
-		});
-		return vars;
-	}
-	// sets a query variable based on the query sent to this page
-	query = getUrlVars()["query"];
-	
-	// sets this page's search query text box value equal to what was passed to this page
-	$('#query').val(query);
+$(document).ready(function(){
 
 	/* ===============================================================================================
 	 * VARIABLES
@@ -57,9 +49,27 @@ $(document).ready(function(){
 		num = $('#num').attr('value');
 		filter = $('#filter').attr('value');
 		query = $('#query').attr('value');
+	
+	if (window.location.href.indexOf("#") === -1) {
+		// sets a query variable based on the query sent to this page
+		query = getUrlVars()["query"];
+		// sets this page's search query text box value equal to what was passed to this page
+		$('#query').val(query);
+		$.bbq.pushState({ query: query });		
+	}	
 		
-		// Parses out the resules based on a query passed to this page from another
-		getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+	/* ===============================================================================================
+	 * HASHCHANGE FUNCTION															 				 *
+	 =============================================================================================== */
+	
+	$(window).bind( "hashchange", function(e) {
+			var requiredFields = e.getState("requiredFields");
+			query = e.getState("query");			   
+			// Call the getResults AJAX function
+			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
+	});
+	
+	$(window).trigger( "hashchange" );
 
 	/*================================================================================================
 	 *  AJAX FUNCTION
@@ -347,14 +357,5 @@ $(document).ready(function(){
 		
 		return false;
 	});
-	
-	$(window).bind( "hashchange", function(e) {
-			var requiredFields = e.getState("requiredFields");
-			query = e.getState("query");   
-			// Call the getResults AJAX function
-			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-	});
-	
-	$(window).trigger( "hashchange" );
 
 });
