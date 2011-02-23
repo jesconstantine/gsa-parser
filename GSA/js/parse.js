@@ -39,6 +39,8 @@ $(document).ready(function(){
 	 * 
 	 =============================================================================================== */
 
+
+
 	// set GSA query string variables based on hidden form fields
 	var gsaURL = $('#gsaURL').attr('value');
 		site = $('#site').attr('value');
@@ -50,13 +52,16 @@ $(document).ready(function(){
 		filter = $('#filter').attr('value');
 		query = $('#query').attr('value');
 	
+	
 	if (window.location.href.indexOf("#") === -1) {
 		// sets a query variable based on the query sent to this page
 		query = getUrlVars()["query"];
 		// sets this page's search query text box value equal to what was passed to this page
 		$('#query').val(query);
 		$.bbq.pushState({ query: query });		
-	}	
+	}
+
+	
 		
 	/* ===============================================================================================
 	 * HASHCHANGE FUNCTION															 				 *
@@ -67,7 +72,7 @@ $(document).ready(function(){
 			query = e.getState("query");			   
 			// Call the getResults AJAX function
 			getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
-	});
+	})
 	
 	$(window).trigger( "hashchange" );
 
@@ -109,15 +114,12 @@ $(document).ready(function(){
 	 * 
 	 =============================================================================================== */
 	
-	$('#gsa').submit(function(){
-		
+	$('#gsa').submit(function(){	
+		requiredFields = '';
 		query = $('#query').attr('value');
 		query = query.replace(/ /g, '%20');
 		query = query.replace(/\'/g, "%27");
-		//requiredFields = $('#requiredFields').attr('value');
-		$.bbq.pushState({ query: query, requiredFields: requiredFields });
-		//check for a hash-change in the URL
-
+		$.bbq.pushState({ query: query, requiredFields: requiredFields });		
 		return false;
     }); // close form
 
@@ -130,8 +132,7 @@ $(document).ready(function(){
 	var activeFilters = [];
 	$('a.filter').live('click', function(mouseEvent){
 		mouseEvent.preventDefault();
-		var query = $('#query').attr('value');
-			filterTEXT = $(this).text();
+		var filterTEXT = $(this).text();
 		
 		// Checks to see if the filter has an active class
 		if ($(this).is('.active')) {
@@ -157,19 +158,19 @@ $(document).ready(function(){
 			
 			$.bbq.pushState({ query: query, requiredFields: requiredFields });
 						
-			itemId = $(this).parent().attr("id");
-			cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
+		//	itemId = $(this).parent().attr("id");
+		//	cloneParentId = itemId.substring(0,itemId.lastIndexOf("_"));
 				
-			$("#" + itemId).remove();
-			$("#" + cloneParentId).show().children().removeClass('active');				
-			
+		//	$("#" + itemId).remove();
+		//	$("#" + cloneParentId).show().children().removeClass('active');				
+			$(this).removeClass('active');
 			return false;
 		// if the filter is inactive, proceed to filter the results
 		} else {
 			$(this).addClass('active');
   			
-				var activeFilter = $.trim($(this).text());
-					activeFilters.push(activeFilter);		
+			var activeFilter = $.trim($(this).text());
+				activeFilters.push(activeFilter);		
 						
 			// checks to see if there is already a filter in the query string and if it is, it adds a period between the new filter and itself
 			if (requiredFields.indexOf(":") !== -1) {
@@ -177,23 +178,23 @@ $(document).ready(function(){
 			}
 			requiredFields += $(this).attr('href');
 			
-			$.bbq.pushState({ query: query, requiredFields: requiredFields });
+			$.bbq.pushState({requiredFields: requiredFields});
 			
 			// Call the getResults AJAX function
 			//getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);
 			
 			// sets a variable based on the href attribute based on the anchor tag's href value
-			var filterHREF = $(this).attr('href');
-				filterHREF = filterHREF.replace(/[^a-zA-Z 0-9]+/g,''); //remove specials from the variable
+//			var filterHREF = $(this).attr('href');
+//				filterHREF = filterHREF.replace(/[^a-zA-Z 0-9]+/g,''); //remove specials from the variable
 			
 			// sets the id of the filter anchor tag to the filterHREF variable 	
-			$(this).parent().attr('id', filterHREF);
+//			$(this).parent().attr('id', filterHREF);
 			
 			// appends _clone to the id of the cloned filter anchor tag
-			var selectedItemId = $(this).parent().attr('id') + "_clone";
+//			var selectedItemId = $(this).parent().attr('id') + "_clone";
    			
-			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
-   			$(this).parent().hide();	
+//			$(this).parent().clone(true, true).attr("id", selectedItemId ).appendTo($("#activeFilters"));
+ //  			$(this).parent().hide();	
 		}
 
 		return false;
@@ -209,6 +210,9 @@ $(document).ready(function(){
 	
 	// parse the XML
     function parseXML(xml){	
+		
+		var	toolList = [];
+			subjectList = [];
 		
 		$('ul#listOfToolFilters>li').remove();
 		$('ul#listOfSubjectFilters>li').remove();
@@ -255,8 +259,6 @@ $(document).ready(function(){
 		/* ================================================================================================
 		 * PARSE RESULTS IF NO SPELLING ERRORS ARE FOUND
 		 ================================================================================================ */
-		var	toolList = [];
-			subjectList = [];
 
 		var html = '<div id="results-nav" class="listNav"></div>';
 		//open the Results UL
@@ -273,21 +275,20 @@ $(document).ready(function(){
 			html += '<li class="result ';
 							
 			$(this).find('MT:[N="research"]').each(function(){
-				var toolTypes = $.trim($(this).attr('V'));
+				var toolType = $.trim($(this).attr('V'));
 				//checks to see if the toolType is in an active filter, and adds it to the toolList array if it isn't
-				if ($.inArray(toolTypes, activeFilters) === -1) {
-						toolList.push(toolTypes);
+				if ($.inArray(toolType, activeFilters) === -1) {
+						toolList.push(toolType);
 					} 
-				html += toolTypes + ' ';
-		
+				//html += toolTypes + ' ';
 			}); // close toolTypes
 			
 			$(this).find('MT:[N="subject"]').each(function(){
-				var subjects = $(this).attr('V');
-					subject = subjects.replace(/ /g, '%20').toLowerCase();
-					
-					subjectList.push(subject);
-				html += subjects + ' ';
+				var subject = $.trim($(this).attr('V'));					
+					if ($.inArray(subject, activeFilters) === -1) {
+						subjectList.push(subject);
+					} 
+				//html += subjects + ' ';
 			}); //close subjects
             
             if ($(this).find('MT:[N="librarianRecommended"]').attr('V')) {                 
@@ -311,17 +312,28 @@ $(document).ready(function(){
 		//append the results to the #content DIV
 		$('#content').append(html);
 		
-		var listOfTools = removeDuplicateElement(toolList);
-			listOfSubjects = removeDuplicateElement(subjectList);
+		var toolList = removeDuplicateElement(toolList);
+			subjectList = removeDuplicateElement(subjectList);
 
 		// loops through the array of research tool types
-		$.each(listOfTools, function(itemIndex, toolName){
+		$.each(toolList, function(itemIndex, toolName){
 			var	toolHREF = toolName.replace(/ /g, '%20').toLowerCase(); //URL encodes spaces
 				listItem = '<li><a class="filter" href="research:' + toolHREF + '">' + toolName + '</a></li>';
 				
 			$('#listOfToolFilters').append(listItem);
 		});
+		
+		$.each(subjectList, function(itemIndex, subjectName){
+			var	subjectHREF = subjectName.replace(/ /g, '%20').toLowerCase(); //URL encodes spaces
+				listItem = '<li><a class="filter" href="subject:' + subjectHREF + '">' + subjectName + '</a></li>';
+				
+			$('#listOfSubjectFilters').append(listItem);
+		});
+		
 		console.log(activeFilters);
+		console.log(toolList);
+		console.log(subjectList);
+		
 		$('ul.filterList>li').tinysort();
     } // close parseXML
 
@@ -342,20 +354,6 @@ $(document).ready(function(){
 		}
 		return false;
 	});
-	
-	/* ===============================================================================================
-	 * RESET FUNCTION																				 * 
-	 =============================================================================================== */
-	$('a#reset').click(function(mouseEvent){
-		mouseEvent.preventDefault();
 
-		$('#query').val('');
-		requiredFields = ('');
-		$('#results').remove();
-		$('#results-nav').remove();
-		$('#spelling').remove();
-		
-		return false;
-	});
 
 });
