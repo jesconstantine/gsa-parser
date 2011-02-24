@@ -33,24 +33,6 @@ function getUrlVars(){
 $(document).ready(function(){
 	
 	console.log("ready");
-
-	/* ===============================================================================================
-	 * VARIABLES
-	 * 
-	 * This next block of code sets the search query variables based on the value(s) #query field of a
-	 * form element, and hidden fields of that form element.
-	 * 
-	 =============================================================================================== */
-
-	// set GSA query string variables based on hidden form fields
-	var gsaURL = $('#gsaURL').attr('value');
-		site = $('#site').attr('value');
-		client = $('#client').attr('value');
-		output = $('#output').attr('value');
-		metaFields = $('#metaFields').attr('value');
-		num = $('#num').attr('value');
-		filter = $('#filter').attr('value');
-		query = $('#query').attr('value');
 		
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 		requiredFields = $.bbq.getState("requiredFields");
@@ -80,8 +62,9 @@ $(document).ready(function(){
 		console.log('hashchange');
 		var	requiredFields = $.bbq.getState("requiredFields");
 			query = $.bbq.getState("query");
+		
 		// Call the getResults AJAX function
-		getResults (num, filter, requiredFields, gsaURL, query, site, client, output, metaFields);	
+		getResults (query, requiredFields);	
 		
 		if (window.location.href.indexOf("requiredFields") !== -1) {
 			var rFields = requiredFields.split('\.');
@@ -97,14 +80,18 @@ $(document).ready(function(){
 			
 			$('a.active').live('click', function(e){
 				e.preventDefault();
+				
 				filterTEXT = $(this).text();
+				
 				rFields = $.grep(rFields, function(value){
 					return value != filterTEXT;
 				});
+				
 				//removes filters from active filter array
 				activeFilters = $.grep(activeFilters, function(value){
 					return value != filterTEXT;
 				});
+				
 				return false;
 			});
 		}
@@ -112,8 +99,6 @@ $(document).ready(function(){
 			console.log(rFields);
 			console.log(activeFilters);
 	});
-	
-
 
 	/*================================================================================================
 	 *  AJAX FUNCTION
@@ -126,7 +111,16 @@ $(document).ready(function(){
 	 ================================================================================================*/
 		
 	// set AJAX properties and query string variables for curl.php
-	function getResults(num, filter, requiredFields, gsaURL, query, site, client, output, metaFields){
+	function getResults(query, requiredFields){
+		
+		var gsaURL = $('#gsaURL').attr('value');
+			site = $('#site').attr('value');
+			client = $('#client').attr('value');
+			output = $('#output').attr('value');
+			metaFields = $('#metaFields').attr('value');
+			num = $('#num').attr('value');
+			filter = $('#filter').attr('value');
+			
 		$.ajax({
 			type: "POST",
 			url: "php/curl.php",
