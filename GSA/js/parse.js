@@ -31,11 +31,14 @@ function getUrlVars(){
 }
 
 $(document).ready(function(){
-	
 	alert("ready");
-		
+	
 	// Array(s)	
 	var activeFilters = [];
+	
+	/* ===============================================================================================
+	 * SET CONDITIONAL VARIABLES															 				 *
+	 =============================================================================================== */
 	
 	if (window.location.href.indexOf("#") === -1) {
 		// sets a query variable based on the query sent to this page
@@ -51,7 +54,7 @@ $(document).ready(function(){
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 			requiredFields = $.bbq.getState("requiredFields");
 		var	requiredFieldsArray = requiredFields.split('\.');
-			console.log(requiredFieldsArray);
+			//console.log(requiredFieldsArray);
 	} else {
 		var requiredFields = $('#requiredFields').attr('value');
 	}
@@ -61,11 +64,13 @@ $(document).ready(function(){
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
-		console.log('hashchange');		
-		
+		console.log('hashchange');
+		var query = $.bbq.getState("query");
+			requiredFields = $.bbq.getState("requiredFields");		
+		getResults (query, requiredFields);	
 		if (window.location.href.indexOf("requiredFields") !== -1) {
 			var requiredFieldsArray = requiredFields.split('\.');
-			console.log('requiredFieldsArray: ' + requiredFieldsArray);
+			//console.log('requiredFieldsArray: ' + requiredFieldsArray);
 			$('ul#activeFilters>li').remove();
 			
 			$.each(requiredFieldsArray, function(itemIndex, filterHREF){
@@ -92,10 +97,10 @@ $(document).ready(function(){
 				return false;
 			});
 		}
+		console.log('required fields: ' + requiredFields);
+		console.log('active filters: ' + activeFilters);
 		
-		getResults (query, requiredFields);	
-			console.log('required fields: ' + requiredFields);
-			console.log('active filters: ' + activeFilters);
+			
 	});
 
 	/*================================================================================================
@@ -132,7 +137,7 @@ $(document).ready(function(){
 				site: site,
 				client: client,
 				output: output,
-				metaFields: metaFields,
+				metaFields: metaFields
 			},
 			success: parseXML
 		}); // close ajax
@@ -150,7 +155,7 @@ $(document).ready(function(){
 		query = $('#query').attr('value');
 		query = query.replace(/ /g, '%20');
 		query = query.replace(/\'/g, "%27");
-		$.bbq.pushState({ query: query });		
+		$.bbq.pushState({ query: query, requiredFields: requiredFields });		
 		return false;
     }); // close form
 
@@ -342,9 +347,6 @@ $(document).ready(function(){
 			$('#listOfSubjectFilters').append(listItem);
 		});
 		
-	//	console.log(activeFilters);
-	//	console.log(toolList);
-	//	console.log(subjectList);
 		
 		$('ul.filterList>li').tinysort();
     } // close parseXML
@@ -364,5 +366,6 @@ $(document).ready(function(){
 		}
 		return false;
 	});
+	
 	$(window).trigger("hashchange");
 });
