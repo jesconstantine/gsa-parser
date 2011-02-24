@@ -50,8 +50,8 @@ $(document).ready(function(){
 	
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 			requiredFields = $.bbq.getState("requiredFields");
-		var	rFields = requiredFields.split('\.');
-			console.log(rFields);
+		var	requiredFieldsArray = requiredFields.split('\.');
+			console.log(requiredFieldsArray);
 	} else {
 		var requiredFields = $('#requiredFields').attr('value');
 	}
@@ -61,19 +61,14 @@ $(document).ready(function(){
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
-		console.log('hashchange');
-		//var	requiredFields = $.bbq.getState("requiredFields");
-		//	query = $.bbq.getState("query");
-		
-		// Call the getResults AJAX function
-		
+		console.log('hashchange');		
 		
 		if (window.location.href.indexOf("requiredFields") !== -1) {
-			var rFields = requiredFields.split('\.');
-			console.log('rFields: ' + rFields);
+			var requiredFieldsArray = requiredFields.split('\.');
+			console.log('requiredFieldsArray: ' + requiredFieldsArray);
 			$('ul#activeFilters>li').remove();
 			
-			$.each(rFields, function(itemIndex, filterHREF){
+			$.each(requiredFieldsArray, function(itemIndex, filterHREF){
 				var filterName = filterHREF.replace(/%20/g, ' ');
 				filterName = filterHREF.replace(':', '');
 				listItem = '<li><a class="filter active" href="' + filterHREF + '">' + filterHREF + '</a></li>';
@@ -85,7 +80,7 @@ $(document).ready(function(){
 				
 				filterTEXT = $(this).text();
 				
-				rFields = $.grep(rFields, function(value){
+				requiredFieldsArray = $.grep(requiredFieldsArray, function(value){
 					return value != filterTEXT;
 				});
 				
