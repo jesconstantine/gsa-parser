@@ -32,13 +32,7 @@ function getUrlVars(){
 
 $(document).ready(function(){
 	
-	console.log("ready");
-		
-	if (window.location.href.indexOf("requiredFields") !== -1) {
-		requiredFields = $.bbq.getState("requiredFields");
-	} else {
-		requiredFields = $('#requiredFields').attr('value');
-	}
+	alert("ready");
 		
 	// Array(s)	
 	var activeFilters = [];
@@ -54,27 +48,35 @@ $(document).ready(function(){
 		$('#query').val(query);
 	}
 	
+	if (window.location.href.indexOf("requiredFields") !== -1) {
+			requiredFields = $.bbq.getState("requiredFields");
+		var	rFields = requiredFields.split('\.');
+			console.log(rFields);
+	} else {
+		var requiredFields = $('#requiredFields').attr('value');
+	}
+	
 	/* ===============================================================================================
 	 * HASHCHANGE FUNCTION															 				 *
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
 		console.log('hashchange');
-		var	requiredFields = $.bbq.getState("requiredFields");
-			query = $.bbq.getState("query");
+		//var	requiredFields = $.bbq.getState("requiredFields");
+		//	query = $.bbq.getState("query");
 		
 		// Call the getResults AJAX function
-		getResults (query, requiredFields);	
+		
 		
 		if (window.location.href.indexOf("requiredFields") !== -1) {
 			var rFields = requiredFields.split('\.');
-			
+			console.log('rFields: ' + rFields);
 			$('ul#activeFilters>li').remove();
 			
 			$.each(rFields, function(itemIndex, filterHREF){
 				var filterName = filterHREF.replace(/%20/g, ' ');
 				filterName = filterHREF.replace(':', '');
-				listItem = '<li><a class="filter active" href="' + filterHREF + '">' + filterName + '</a></li>';
+				listItem = '<li><a class="filter active" href="' + filterHREF + '">' + filterHREF + '</a></li>';
 				$('ul#activeFilters').append(listItem);
 			});
 			
@@ -95,9 +97,10 @@ $(document).ready(function(){
 				return false;
 			});
 		}
-			console.log(typeof requiredFields);
-			console.log(rFields);
-			console.log(activeFilters);
+		
+		getResults (query, requiredFields);	
+			console.log('required fields: ' + requiredFields);
+			console.log('active filters: ' + activeFilters);
 	});
 
 	/*================================================================================================
@@ -152,7 +155,7 @@ $(document).ready(function(){
 		query = $('#query').attr('value');
 		query = query.replace(/ /g, '%20');
 		query = query.replace(/\'/g, "%27");
-		$.bbq.pushState({ query: query, requiredFields: requiredFields });		
+		$.bbq.pushState({ query: query });		
 		return false;
     }); // close form
 
@@ -184,12 +187,11 @@ $(document).ready(function(){
 				
 			$.bbq.pushState({ query: query, requiredFields: requiredFields });
 
-
 			return false;
 			
 		} else {
   			
-			var activeFilter = $(this).text();
+			var activeFilter = $(this).attr('href');
 				activeFilters.push(activeFilter);		
 						
 			// checks to see if there is already a filter in the query string and if it is, it adds a period between the new filter and itself
@@ -198,10 +200,10 @@ $(document).ready(function(){
 			}
 			requiredFields += $(this).attr('href');
 			
-			$.bbq.pushState({requiredFields: requiredFields});
+			$.bbq.pushState({query: query, requiredFields: requiredFields});
 			
 		}
-		$(window).trigger( "hashchange" );
+	//	$(window).trigger( "hashchange" );
 		return false;
 	}); // close click
 	
@@ -218,6 +220,9 @@ $(document).ready(function(){
 		
 		var	toolList = [];
 			subjectList = [];
+			
+			toolListHREFs = [];
+			subjectListHREFs = [];
 		
 		$('ul#listOfToolFilters>li').remove();
 		$('ul#listOfSubjectFilters>li').remove();
@@ -282,9 +287,17 @@ $(document).ready(function(){
 			$(this).find('MT:[N="research"]').each(function(){
 				var toolType = $.trim($(this).attr('V'));
 				//checks to see if the toolType is in an active filter, and adds it to the toolList array if it isn't
+				
 				if ($.inArray(toolType, activeFilters) === -1) {
 						toolList.push(toolType);
-					} 
+				} 
+				
+				var toolTypeHREF = "research:" + toolType.replace(/ /g, '%20').toLowerCase();
+				
+				if ($.inArray(toolTypeHREF, activeFilters) === -1) {
+						toolListHREFs.push(toolTypeHREF);
+				} 
+				
 				//html += toolTypes + ' ';
 			}); // close toolTypes
 			
@@ -356,6 +369,5 @@ $(document).ready(function(){
 		}
 		return false;
 	});
-	
-		$(window).trigger("hashchange");
+	$(window).trigger("hashchange");
 });
