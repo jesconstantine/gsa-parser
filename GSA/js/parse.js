@@ -54,7 +54,7 @@ $(document).ready(function(){
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 			requiredFields = $.bbq.getState("requiredFields");
 		var	requiredFieldsArray = requiredFields.split('\.');
-			//console.log(requiredFieldsArray);
+			////console.log(requiredFieldsArray);
 	} else {
 		var requiredFields = $('#requiredFields').attr('value');
 	}
@@ -64,13 +64,13 @@ $(document).ready(function(){
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
-		console.log('hashchange');
+		//console.log('hashchange');
 		var query = $.bbq.getState("query");
 			requiredFields = $.bbq.getState("requiredFields");		
 		getResults (query, requiredFields);	
 		if (window.location.href.indexOf("requiredFields") !== -1) {
 			var requiredFieldsArray = requiredFields.split('\.');
-			//console.log('requiredFieldsArray: ' + requiredFieldsArray);
+			////console.log('requiredFieldsArray: ' + requiredFieldsArray);
 			$('ul#activeFilters>li').remove();
 			
 			$.each(requiredFieldsArray, function(itemIndex, filterHREF){
@@ -97,8 +97,8 @@ $(document).ready(function(){
 				return false;
 			});
 		}
-		console.log('required fields: ' + requiredFields);
-		console.log('active filters: ' + activeFilters);
+		//console.log('required fields: ' + requiredFields);
+		//console.log('active filters: ' + activeFilters);
 		
 			
 	});
@@ -195,10 +195,13 @@ $(document).ready(function(){
 				activeFilters.push(activeFilter);		
 						
 			// checks to see if there is already a filter in the query string and if it is, it adds a period between the new filter and itself
-			if (requiredFields.indexOf(":") !== -1) {
-				requiredFields += ".";	
+			
+			if (window.location.href.indexOf("requiredFields") !== -1) {
+				if (requiredFields.indexOf(":") !== -1) {
+					requiredFields += ".";
+				}
+				requiredFields += $(this).attr('href');
 			}
-			requiredFields += $(this).attr('href');
 			
 			$.bbq.pushState({query: query, requiredFields: requiredFields});
 			
