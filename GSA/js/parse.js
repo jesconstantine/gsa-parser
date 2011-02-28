@@ -33,16 +33,14 @@ function getUrlVars(){
 $(document).ready(function(){
 	alert("ready");
 	
-	// Array(s)	
-	var activeFilters = [];
-	
 	/* ===============================================================================================
 	 * SET CONDITIONAL VARIABLES															 				 *
 	 =============================================================================================== */
 	
 	if (window.location.href.indexOf("#") === -1) {
 		// sets a query variable based on the query sent to this page
-		query = getUrlVars()["query"];
+		var query = getUrlVars()["query"];
+			
 		// sets this page's search query text box value equal to what was passed to this page
 		$('#query').val(query);
 		$.bbq.pushState({ query: query, requiredFields: requiredFields });		
@@ -52,12 +50,14 @@ $(document).ready(function(){
 	}
 	
 	if (window.location.href.indexOf("requiredFields") !== -1) {
-			requiredFields = $.bbq.getState("requiredFields");
-		var	requiredFArray = requiredFields.split('\.');
-			requiredFieldsArray = removeDuplicateElement(requiredFArray);
+		var	requiredFields = $.bbq.getState("requiredFields");
+		var	requiredFieldsArray = requiredFields.split('\.');
+		alert('HEY!');
 	} else {
 		var requiredFields = $('#requiredFields').attr('value');
 	}
+	
+	
 	
 	/* ===============================================================================================
 	 * HASHCHANGE FUNCTION															 				 *
@@ -65,12 +65,13 @@ $(document).ready(function(){
 	
 	$(window).bind( "hashchange", function(e) {
 		
-		var query = $.bbq.getState("query");
+			query = $.bbq.getState("query");
 			requiredFields = $.bbq.getState("requiredFields");		
-		getResults (query, requiredFields);	
+		
 		if (window.location.href.indexOf("requiredFields") !== -1) {
-			var requiredFArray = requiredFields.split('\.');
-				requiredFieldsArray = removeDuplicateElement(requiredFArray);
+			requiredFieldsArray = requiredFields.split('\.');
+			
+			////console.log("one: " + requiredFieldsArray);
 
 			$('ul#activeFilters>li').remove();
 			
@@ -92,7 +93,9 @@ $(document).ready(function(){
 				return false;
 			});
 		}
-	//	console.log(requiredFieldsArray);
+		////console.log("two: " + requiredFieldsArray);
+		getResults (query, requiredFields);
+		////console.log("three: " + requiredFieldsArray);	
 	});
 
 	/*================================================================================================
@@ -182,9 +185,6 @@ $(document).ready(function(){
 			return false;
 			
 		} else {
-  			
-			var activeFilter = $(this).attr('href');
-				activeFilters.push(activeFilter);		
 						
 			// checks to see if there is already a filter in the query string and if it is, it adds a period between the new filter and itself
 			
@@ -214,10 +214,8 @@ $(document).ready(function(){
     function parseXML(xml){	
 		
 		var	toolList = [];
-			subjectList = [];
 			
-			toolListHREFs = [];
-			subjectListHREFs = [];
+			subjectList = [];
 		
 		$('ul#listOfToolFilters>li').remove();
 		$('ul#listOfSubjectFilters>li').remove();
@@ -283,21 +281,25 @@ $(document).ready(function(){
 				var toolType = 'research:' + $.trim($(this).attr('V')).replace(/ /g, '%20').toLowerCase();
 				//checks to see if the toolType is in an active filter, and adds it to the toolList array if it isn't
 				
+				console.log(toolType);
+				toolList = removeDuplicateElement(toolList);
+				console.log(toolList);
+				console.log(requiredFieldsArray);
 				if ($.inArray(toolType, requiredFieldsArray) === -1) {
 						toolList.push(toolType);
-				}
-				
+						
+				} 				
 				//html += toolTypes + ' ';
 			}); // close toolTypes
 			
-			$(this).find('MT:[N="subject"]').each(function(){
+		/*	$(this).find('MT:[N="subject"]').each(function(){
 				var subject = $.trim($(this).attr('V'));					
 					if ($.inArray(subject, activeFilters) === -1) {
 						subjectList.push(subject);
 					} 
 				//html += subjects + ' ';
 			}); //close subjects
-            
+            */
             if ($(this).find('MT:[N="librarianRecommended"]').attr('V')) {                 
           		html += ' librarianRecommended'
             } 
