@@ -53,8 +53,8 @@ $(document).ready(function(){
 	
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 			requiredFields = $.bbq.getState("requiredFields");
-		var	requiredFieldsArray = requiredFields.split('\.');
-			////console.log(requiredFieldsArray);
+		var	requiredFArray = requiredFields.split('\.');
+			requiredFieldsArray = removeDuplicateElement(requiredFArray);
 	} else {
 		var requiredFields = $('#requiredFields').attr('value');
 	}
@@ -64,43 +64,35 @@ $(document).ready(function(){
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
-		//console.log('hashchange');
+		
 		var query = $.bbq.getState("query");
 			requiredFields = $.bbq.getState("requiredFields");		
 		getResults (query, requiredFields);	
 		if (window.location.href.indexOf("requiredFields") !== -1) {
-			var requiredFieldsArray = requiredFields.split('\.');
-			////console.log('requiredFieldsArray: ' + requiredFieldsArray);
+			var requiredFArray = requiredFields.split('\.');
+				requiredFieldsArray = removeDuplicateElement(requiredFArray);
+
 			$('ul#activeFilters>li').remove();
 			
 			$.each(requiredFieldsArray, function(itemIndex, filterHREF){
-				var filterName = filterHREF.replace(/%20/g, ' ');
-				filterName = filterHREF.replace(':', '');
-				listItem = '<li><a class="filter active" href="' + filterHREF + '">' + filterHREF + '</a></li>';
+				var filterName = filterHREF.replace(/%20/g, ' ').replace('research:', '');
+					listItem = '<li><a class="filter active" href="' + filterHREF + '">' + filterName + '</a></li>';
 				$('ul#activeFilters').append(listItem);
 			});
 			
 			$('a.active').live('click', function(e){
 				e.preventDefault();
 				
-				filterTEXT = $(this).text();
+				filterHREF = $(this).attr('href');
 				
 				requiredFieldsArray = $.grep(requiredFieldsArray, function(value){
-					return value != filterTEXT;
-				});
-				
-				//removes filters from active filter array
-				activeFilters = $.grep(activeFilters, function(value){
-					return value != filterTEXT;
+					return value != filterHREF;
 				});
 				
 				return false;
 			});
 		}
-		//console.log('required fields: ' + requiredFields);
-		//console.log('active filters: ' + activeFilters);
-		
-			
+	//	console.log(requiredFieldsArray);
 	});
 
 	/*================================================================================================
@@ -288,18 +280,12 @@ $(document).ready(function(){
 			html += '<li class="result ';
 							
 			$(this).find('MT:[N="research"]').each(function(){
-				var toolType = $.trim($(this).attr('V'));
+				var toolType = 'research:' + $.trim($(this).attr('V')).replace(/ /g, '%20').toLowerCase();
 				//checks to see if the toolType is in an active filter, and adds it to the toolList array if it isn't
 				
-				if ($.inArray(toolType, activeFilters) === -1) {
+				if ($.inArray(toolType, requiredFieldsArray) === -1) {
 						toolList.push(toolType);
-				} 
-				
-				var toolTypeHREF = "research:" + toolType.replace(/ /g, '%20').toLowerCase();
-				
-				if ($.inArray(toolTypeHREF, activeFilters) === -1) {
-						toolListHREFs.push(toolTypeHREF);
-				} 
+				}
 				
 				//html += toolTypes + ' ';
 			}); // close toolTypes
@@ -336,9 +322,9 @@ $(document).ready(function(){
 			subjectList = removeDuplicateElement(subjectList);
 
 		// loops through the array of research tool types
-		$.each(toolList, function(itemIndex, toolName){
-			var	toolHREF = toolName.replace(/ /g, '%20').toLowerCase(); //URL encodes spaces
-				listItem = '<li><a class="filter" href="research:' + toolHREF + '">' + toolName + '</a></li>';
+		$.each(toolList, function(itemIndex, toolHREF){
+			var	toolName = toolHREF.replace(/%20/g, ' ').replace('research:', '').toLowerCase(); //URL encodes spaces		
+				listItem = '<li><a class="filter" href="' + toolHREF + '">' + toolName + '</a></li>';
 				
 			$('#listOfToolFilters').append(listItem);
 		});
