@@ -43,18 +43,21 @@ $(document).ready(function(){
 			
 		// sets this page's search query text box value equal to what was passed to this page
 		$('#query').val(query);
-		$.bbq.pushState({ query: query, requiredFields: requiredFields });		
+		$.bbq.pushState({ query: query, requiredFields: requiredFields });
+		alert('#!');
 	} else {
 		var query = $.bbq.getState("query");
 		$('#query').val(query);
+		alert('ELSE #');
 	}
 	
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 		var	requiredFields = $.bbq.getState("requiredFields");
 		var	requiredFieldsArray = requiredFields.split('\.');
-		alert('HEY!');
+		alert('REQUIRED FIELDS!');
 	} else {
 		var requiredFields = $('#requiredFields').attr('value');
+		alert('ELSE REQUIRED FIELDS!');
 	}
 	
 	
@@ -64,7 +67,7 @@ $(document).ready(function(){
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
-		
+			alert("hash");
 			query = $.bbq.getState("query");
 			requiredFields = $.bbq.getState("requiredFields");		
 		
@@ -212,7 +215,7 @@ $(document).ready(function(){
 	
 	// parse the XML
     function parseXML(xml){	
-		
+		alert("parse");
 		var	toolList = [];
 			
 			subjectList = [];
