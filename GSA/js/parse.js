@@ -36,21 +36,7 @@ $(document).ready(function(){
 	/* ===============================================================================================
 	 * SET CONDITIONAL VARIABLES															 				 *
 	 =============================================================================================== */
-	
-	if (window.location.href.indexOf("#") === -1) {
-		// sets a query variable based on the query sent to this page
-		var query = getUrlVars()["query"];
-			
-		// sets this page's search query text box value equal to what was passed to this page
-		$('#query').val(query);
-		$.bbq.pushState({ query: query, requiredFields: requiredFields });
-		alert('#!');
-	} else {
-		var query = $.bbq.getState("query");
-		$('#query').val(query);
-		alert('ELSE #');
-	}
-	
+
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 		var	requiredFields = $.bbq.getState("requiredFields");
 		var	requiredFieldsArray = requiredFields.split('\.');
@@ -59,6 +45,22 @@ $(document).ready(function(){
 		var requiredFields = $('#requiredFields').attr('value');
 		alert('ELSE REQUIRED FIELDS!');
 	}
+	
+	if (window.location.href.indexOf("#") === -1) {
+		// sets a query variable based on the query sent to this page
+		var query = getUrlVars()["query"];
+		// sets this page's search query text box value equal to what was passed to this page
+		$('#query').val(query);
+		alert('#!');
+	} else {
+		var query = $.bbq.getState("query");
+		$('#query').val(query);
+		alert('ELSE #');
+	}
+	
+	$.bbq.pushState({ query: query, requiredFields: requiredFields });
+	
+
 	
 	
 	
