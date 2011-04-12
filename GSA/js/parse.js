@@ -31,7 +31,7 @@ function getUrlVars(){
 }
 
 $(document).ready(function(){
-	alert("ready");
+	//alert("ready");
 	
 	/* ===============================================================================================
 	 * SET CONDITIONAL VARIABLES															 				 *
@@ -40,10 +40,10 @@ $(document).ready(function(){
 	if (window.location.href.indexOf("requiredFields") !== -1) {
 		var	requiredFields = $.bbq.getState("requiredFields");
 		var	requiredFieldsArray = requiredFields.split('\.');
-		alert('REQUIRED FIELDS!');
+		//alert('REQUIRED FIELDS!');
 	} else {
 		var requiredFields = $('#requiredFields').attr('value');
-		alert('ELSE REQUIRED FIELDS!');
+		//alert('ELSE REQUIRED FIELDS!');
 	}
 	
 	if (window.location.href.indexOf("#") === -1) {
@@ -51,11 +51,11 @@ $(document).ready(function(){
 		var query = getUrlVars()["query"];
 		// sets this page's search query text box value equal to what was passed to this page
 		$('#query').val(query);
-		alert('#!');
+		//alert('#!');
 	} else {
 		var query = $.bbq.getState("query");
 		$('#query').val(query);
-		alert('ELSE #');
+		//alert('ELSE #');
 	}
 	
 	$.bbq.pushState({ query: query, requiredFields: requiredFields });
@@ -69,7 +69,7 @@ $(document).ready(function(){
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
-			alert("hash");
+			//alert("hash");
 			query = $.bbq.getState("query");
 			requiredFields = $.bbq.getState("requiredFields");		
 		
@@ -213,7 +213,7 @@ $(document).ready(function(){
 	
 	// parse the XML
     function parseXML(xml){	
-		alert("parse");
+		//alert("parse");
 		var	toolList = [];
 			
 			subjectList = [];
@@ -355,6 +355,20 @@ $(document).ready(function(){
 		}
 		return false;
 	});
+	
+	$('a.alphaSort').click(function(mouseEvent){
+		mouseEvent.preventDefault();
+		$('ul#results').listnav({ 
+		    includeAll: false, 
+		    includeOther: true, 
+		    flagDisabled: true, 
+		    noMatchText: 'Nothing matched your filter, please click another letter.', 
+		    showCounts: false, 
+		    cookieName: 'my-main-list', 
+		    //onClick: function(letter){ alert('You clicked ' + letter); }, 
+		    prefixes: ['the','a'] 
+		});
+	 });
 	
 	$(window).trigger("hashchange");
 });
