@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<GSP VER="3.2">
+    <TM>
+        0.032659
+    </TM>
+    <Q>
+        Philosopher Index
+    </Q>
+    <PARAM name="site" value="dbCrawTestULResearchTools" original_value="dbCrawTestULResearchTools"/>
+    <PARAM name="client" value="UL_FE_01" original_value="UL_FE_01"/>
+    <PARAM name="output" value="xml_no_dtd" original_value="xml_no_dtd"/>
+    <PARAM name="getfields" value="*" original_value="*"/>
+    <PARAM name="num" value="1000" original_value="1000"/>
+    <PARAM name="filter" value="0" original_value="0"/>
+    <PARAM name="requiredfields" value="" original_value=""/>
+    <PARAM name="q" value="Philosopher Index" original_value="Philosopher+Index"/>
+    <PARAM name="ie" value="UTF-8" original_value="UTF-8"/>
+    <PARAM name="ip" value="130.101.217.102" original_value="130.101.217.102"/>
+    <PARAM name="access" value="p" original_value="p"/>
+    <PARAM name="sort" value="date:D:L:d1" original_value="date:D:L:d1"/>
+    
+    <PARAM name="entqr" value="3" original_value="3"/>
+    <Spelling>
+        <Suggestion q="Philosopher&#39;s Index">
+            &lt;b&gt;&lt;i&gt;Philosopher&amp;#39;s&lt;/i&gt;&lt;/b&gt; Index
+        </Suggestion>
+    </Spelling>
+    <RES SN="1" EN="5">
+        <M>
+            5
+        </M>
+        <XT/>
+        <R N="1">
+            <U>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot?inode=1271761
+            </U>
+            <UE>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot%3Finode%3D1271761
+            </UE>
+            <T>
+                &lt;b&gt;Philosopher&amp;#39;s Index&lt;/b&gt;
+            </T>
+            <RK>
+                9
+            </RK>
+            <CRAWLDATE>
+                13 Apr 2011
+            </CRAWLDATE>
+            <ENT_SOURCE>
+                S5-MPGS7LJ5TGSAB
+            </ENT_SOURCE>
+            <FS NAME="date" VALUE=""/><MT N="dttm_modified" V="2010-07-30 12:21:44"/><MT N="inode" V="1271761"/><MT N="librarianRecommended" V="1"/><MT N="research" V="Article Databases "/><MT N="subject" V="Classics"/><MT N="subject" V="Philosophy"/><MT N="tag" V="ethics"/><MT N="tag" V="epistemology"/><MT N="tag" V="metaphysics"/><MT N="tag" V="logic"/><MT N="tag" V="philosophy of science"/><MT N="tag" V="philosophy of mind"/><MT N="tag" V="existentialism"/><MT N="tag" V="phenomenology"/><MT N="tag" V="continental"/><MT N="tag" V="analytical philosophy"/><MT N="tag" V="history of philosophy"/><MT N="tag" V="empiricism"/><MT N="ROBOTS" V="NOFOLLOW"/>
+            <S>
+                The &lt;b&gt;Philosopher&amp;#39;s Index&lt;/b&gt; provides &lt;b&gt;indexing&lt;/b&gt; and abstracts from books&lt;br&gt; and journals of &lt;b&gt;philosophy&lt;/b&gt; and related fields. It covers &lt;b&gt;...&lt;/b&gt;
+            </S>
+            <LANG>
+                en
+            </LANG>
+            <HAS>
+                <L/><C SZ="1k" CID="MDYm5RxmsvkJ" ENC="ISO-8859-1"/>
+            </HAS>
+        </R>
+        <R N="2">
+            <U>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot?inode=1691374
+            </U>
+            <UE>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot%3Finode%3D1691374
+            </UE>
+            <T>
+                ISI Web of Knowledge
+            </T>
+            <RK>
+                5
+            </RK>
+            <CRAWLDATE>
+                13 Apr 2011
+            </CRAWLDATE>
+            <ENT_SOURCE>
+                S5-MPGS7LJ5TGSAB
+            </ENT_SOURCE>
+            <FS NAME="date" VALUE=""/><MT N="dttm_modified" V="2011-04-08 11:15:14"/><MT N="inode" V="1691374"/><MT N="research" V="Article Databases "/><MT N="subject" V="Art and Art History"/><MT N="subject" V="Arts Administration"/><MT N="subject" V="Classics"/><MT N="subject" V="Dance"/><MT N="subject" V="English"/><MT N="subject" V="Film"/><MT N="subject" V="Music"/><MT N="subject" V="Philosophy"/><MT N="subject" V="Theatre"/><MT N="subject" V="Economics"/><MT N="subject" V="Speech-language Pathology and Audiology"/><MT N="subject" V="Biology"/><MT N="subject" V="Biomedical Engineering"/><MT N="subject" V="Chemical and Biomolecular Engineering"/><MT N="subject" V="Chemistry"/><MT N="subject" V="Civil Engineering"/><MT N="subject" V="Computer Engineering"/><MT N="subject" V="Computer Science"/><MT N="subject" V="Electrical Engineering"/><MT N="subject" V="Engineering and Science Technology"/><MT N="subject" V="Fire Protection and Management"/><MT N="subject" V="Geology"/><MT N="subject" V="Mathematics"/><MT N="subject" V="Mechanical Engineering"/><MT N="subject" V="Nutrition and Dietetics"/><MT N="subject" V="Physics"/><MT N="subject" V="Polymer Engineering"/><MT N="subject" V="Statistics"/><MT N="subject" V="Counseling"/><MT N="subject" V="Family and Child Development"/><MT N="subject" V="Family and Consumer Sciences"/><MT N="subject" V="Pan-African Studies"/><MT N="subject" V="Political Science"/><MT N="subject" V="Psychology"/><MT N="subject" V="Social Work"/><MT N="subject" V="Sociology"/><MT N="subject" V="Library Resources Available when Conducting a Literature Review"/><MT N="tag" V="Web of Science"/><MT N="tag" V="Science Citation Index Expanded"/><MT N="tag" V="Social Sciences Citation Index"/><MT N="tag" V="Arts and Humanities Citation Index"/><MT N="tag" V="Web of Knowledge"/><MT N="tag" V="ISI"/><MT N="tag" V="citation index"/><MT N="tag" V="citation"/><MT N="tag" V="citation databases"/><MT N="tag" V="Clarinet Studio"/><MT N="tag" V="Flute Studio"/><MT N="tag" V="communication research"/><MT N="tag" V="film"/><MT N="tag" V="motion pictures"/><MT N="tag" V="film criticism"/><MT N="tag" V="intercultural communication"/><MT N="tag" V="interpersonal communication"/><MT N="tag" V="communication"/><MT N="tag" V="journalism"/><MT N="tag" V="mass media"/><MT N="tag" V="media"/><MT N="tag" V="nonverbal communication"/><MT N="tag" V="oratory"/><MT N="tag" V="rhetoric"/><MT N="tag" V="written communication"/><MT N="tag" V="communication theories"/><MT N="tag" V="television"/><MT N="tag" V="persuasion"/><MT N="tag" V="cultural studies"/><MT N="tag" V="discourse"/><MT N="tag" V="discourse analysis"/><MT N="tag" V="social service"/><MT N="tag" V="social case work"/><MT N="tag" V="family"/><MT N="tag" V="families"/><MT N="tag" V="alcoholics"/><MT N="tag" V="alcoholism"/><MT N="tag" V="childrens services"/><MT N="tag" V="youth"/><MT N="tag" V="juvenile delinquency"/><MT N="tag" V="child welfare"/><MT N="tag" V="social group work"/><MT N="tag" V="social workers"/><MT N="tag" V="public welfare"/><MT N="tag" V="welfare"/><MT N="tag" V="poverty"/><MT N="tag" V="aged"/><MT N="tag" V="aging"/><MT N="tag" V="elderly"/><MT N="tag" V="social work administration"/><MT N="tag" V="victims of crime"/><MT N="tag" V="substance abuse"/><MT N="tag" V="social policy"/><MT N="tag" V="social problems"/><MT N="tag" V="human services"/><MT N="tag" V="gerontology"/><MT N="tag" V="impact"/><MT N="tag" V="impact reports"/><MT N="tag" V="impact journals"/><MT N="tag" V="WOK"/><MT N="tag" V="science citation index"/><MT N="tag" V="SSCI"/><MT N="tag" V="ECE Core"/><MT N="tag" V="OhioLINK"/><MT N="ROBOTS" V="NOFOLLOW"/>
+            <S>
+                This resource includes the Social Sciences Citation &lt;b&gt;Index&lt;/b&gt;, the Arts &amp;amp; Humanities&lt;br&gt; Citation &lt;b&gt;Index&lt;/b&gt;, and the Science Citation &lt;b&gt;Index&lt;/b&gt; Expanded.
+            </S>
+            <LANG>
+                en
+            </LANG>
+            <HAS>
+                <L/><C SZ="1k" CID="HU4nzyw3mqoJ" ENC="ISO-8859-1"/>
+            </HAS>
+        </R>
+        <R N="3">
+            <U>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot?inode=1271068
+            </U>
+            <UE>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot%3Finode%3D1271068
+            </UE>
+            <T>
+                ATLA Religion Database (EBSCO interface)
+            </T>
+            <RK>
+                3
+            </RK>
+            <CRAWLDATE>
+                13 Apr 2011
+            </CRAWLDATE>
+            <ENT_SOURCE>
+                S5-MPGS7LJ5TGSAB
+            </ENT_SOURCE>
+            <FS NAME="date" VALUE=""/><MT N="dttm_modified" V="2011-03-22 14:58:08"/><MT N="inode" V="1271068"/><MT N="librarianRecommended" V="1"/><MT N="research" V="Article Databases "/><MT N="research" V="Book Reviews "/><MT N="subject" V="Art and Art History"/><MT N="subject" V="Philosophy"/><MT N="subject" V="Religion"/><MT N="tag" V="Buddhist"/><MT N="tag" V="Buddhism"/><MT N="tag" V="Buddha"/><MT N="tag" V="Islam"/><MT N="tag" V="Islamic"/><MT N="tag" V="Christ"/><MT N="tag" V="Christian"/><MT N="tag" V="Christianity"/><MT N="tag" V="Shinto"/><MT N="tag" V="Hindu"/><MT N="tag" V="Hinduism"/><MT N="tag" V="Catholic"/><MT N="tag" V="Catholicism"/><MT N="tag" V="Protestant"/><MT N="tag" V="Bible"/><MT N="tag" V="New Testament"/><MT N="tag" V="Old Testament"/><MT N="tag" V="Reformation"/><MT N="tag" V="Ethics"/><MT N="tag" V="OhioLINK"/><MT N="ROBOTS" V="NOFOLLOW"/>
+            <S>
+                The premier &lt;b&gt;index&lt;/b&gt; to journal articles, book reviews, and &lt;b&gt;...&lt;/b&gt; church history,&lt;br&gt; ecumenism, ethics, missions, pastoral ministry, &lt;b&gt;philosophy&lt;/b&gt;, religions and &lt;b&gt;...&lt;/b&gt;
+            </S>
+            <LANG>
+                en
+            </LANG>
+            <HAS>
+                <L/><C SZ="1k" CID="XeG5-wZcr9sJ" ENC="ISO-8859-1"/>
+            </HAS>
+        </R>
+        <R N="4">
+            <U>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot?inode=1271377
+            </U>
+            <UE>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot%3Finode%3D1271377
+            </UE>
+            <T>
+                Humanities International Complete
+            </T>
+            <RK>
+                3
+            </RK>
+            <CRAWLDATE>
+                13 Apr 2011
+            </CRAWLDATE>
+            <ENT_SOURCE>
+                S5-MPGS7LJ5TGSAB
+            </ENT_SOURCE>
+            <FS NAME="date" VALUE=""/><MT N="dttm_modified" V="2010-07-30 11:19:32"/><MT N="inode" V="1271377"/><MT N="research" V="Article Databases "/><MT N="subject" V="Art and Art History"/><MT N="subject" V="English"/><MT N="subject" V="Film"/><MT N="subject" V="Interior Design"/><MT N="subject" V="Philosophy"/><MT N="subject" V="Communication"/><MT N="subject" V="Family and Consumer Sciences"/><MT N="subject" V="History"/><MT N="tag" V="communication research"/><MT N="tag" V="film"/><MT N="tag" V="motion pictures"/><MT N="tag" V="film criticism"/><MT N="tag" V="intercultural communication"/><MT N="tag" V="interpersonal communication"/><MT N="tag" V="communication"/><MT N="tag" V="journalism"/><MT N="tag" V="mass media"/><MT N="tag" V="media"/><MT N="tag" V="nonverbal communication"/><MT N="tag" V="oratory"/><MT N="tag" V="rhetoric"/><MT N="tag" V="written communication"/><MT N="tag" V="communication theories"/><MT N="tag" V="television"/><MT N="tag" V="persuasion"/><MT N="tag" V="cultural studies"/><MT N="tag" V="discourse"/><MT N="tag" V="discourse analysis"/><MT N="tag" V="OhioLINK"/><MT N="tag" V="Ebsco"/><MT N="ROBOTS" V="NOFOLLOW"/>
+            <S>
+                Produced by Whitston Publishing (an imprint of EBSCO Publishing), this&lt;br&gt; database includes all data from Humanities International &lt;b&gt;Index&lt;/b&gt; (over 2,000 &lt;b&gt;...&lt;/b&gt;
+            </S>
+            <LANG>
+                en
+            </LANG>
+            <HAS>
+                <L/><C SZ="1k" CID="cQi7fMa153YJ" ENC="ISO-8859-1"/>
+            </HAS>
+        </R>
+        <R N="5">
+            <U>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot?inode=885838
+            </U>
+            <UE>
+                http://www.uakron.edu/libraries/bierce_scitech/research_tools/jump/jump.dot%3Finode%3D885838
+            </UE>
+            <T>
+                ATLA Religion Database (OSearch interface)
+            </T>
+            <RK>
+                3
+            </RK>
+            <CRAWLDATE>
+                13 Apr 2011
+            </CRAWLDATE>
+            <ENT_SOURCE>
+                S5-MPGS7LJ5TGSAB
+            </ENT_SOURCE>
+            <FS NAME="date" VALUE=""/><MT N="dttm_modified" V="2010-02-17 20:52:43"/><MT N="inode" V="885838"/><MT N="research" V="Article Databases "/><MT N="research" V="Book Reviews "/><MT N="subject" V="Art and Art History"/><MT N="subject" V="Philosophy"/><MT N="subject" V="Religion"/><MT N="tag" V="Buddhist"/><MT N="tag" V="Buddhism"/><MT N="tag" V="Buddha"/><MT N="tag" V="Islam"/><MT N="tag" V="Islamic"/><MT N="tag" V="Christ"/><MT N="tag" V="Christian"/><MT N="tag" V="Christianity"/><MT N="tag" V="Shinto"/><MT N="tag" V="Hindu"/><MT N="tag" V="Hinduism"/><MT N="tag" V="Catholic"/><MT N="tag" V="Catholicism"/><MT N="tag" V="Protestant"/><MT N="tag" V="Bible"/><MT N="tag" V="New Testament"/><MT N="tag" V="Old Testament"/><MT N="tag" V="Reformation"/><MT N="tag" V="Ethics"/><MT N="tag" V="OhioLINK"/><MT N="ROBOTS" V="NOFOLLOW"/>
+            <S>
+                &lt;b&gt;Index&lt;/b&gt; to journal articles, book reviews, and collections&lt;br&gt; of essays in all fields of religion.
+            </S>
+            <LANG>
+                en
+            </LANG>
+            <HAS>
+                <L/><C SZ="1k" CID="lUtFS7UoRwIJ" ENC="ISO-8859-1"/>
+            </HAS>
+        </R>
+    </RES>
+    
+</GSP>
