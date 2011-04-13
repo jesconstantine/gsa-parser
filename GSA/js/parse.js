@@ -32,6 +32,7 @@ function getUrlVars(){
 
 $(document).ready(function(){
 	//alert("ready");
+
 	
 	/* ===============================================================================================
 	 * SET CONDITIONAL VARIABLES															 				 *
@@ -60,19 +61,15 @@ $(document).ready(function(){
 	
 	$.bbq.pushState({ query: query, requiredFields: requiredFields });
 	
-
-	
-	
-	
 	/* ===============================================================================================
 	 * HASHCHANGE FUNCTION															 				 *
 	 =============================================================================================== */
 	
 	$(window).bind( "hashchange", function(e) {
-			//alert("hash");
-			query = $.bbq.getState("query");
-			requiredFields = $.bbq.getState("requiredFields");		
-		
+		alert("hash");
+		query = $.bbq.getState("query");
+		requiredFields = $.bbq.getState("requiredFields");		
+			
 		if (window.location.href.indexOf("requiredFields") !== -1) {
 			requiredFieldsArray = requiredFields.split('\.');
 
@@ -95,6 +92,7 @@ $(document).ready(function(){
 				
 				return false;
 			});
+			
 		}
 		getResults (query, requiredFields);
 	});
@@ -199,7 +197,6 @@ $(document).ready(function(){
 			$.bbq.pushState({query: query, requiredFields: requiredFields});
 			
 		}
-	//	$(window).trigger( "hashchange" );
 		return false;
 	}); // close click
 	
@@ -337,7 +334,27 @@ $(document).ready(function(){
 			$('#listOfSubjectFilters').append(listItem);
 		});
 		
+		/*
+		 * Alpha sorts the filter list
+		 */		
 		$('ul.filterList>li').tinysort();
+		
+		/*
+		 * Checks to see if alphasorted is in the location bar and uses ListNav plugin on results
+		 */
+		
+		if (window.location.href.indexOf("alphaSort=1") !== -1) {
+			$('ul#results').listnav({
+				includeAll: false,
+				includeOther: true,
+				flagDisabled: true,
+				noMatchText: 'Nothing matched your filter, please click another letter.',
+				showCounts: false,
+				cookieName: 'my-main-list',
+				//onClick: function(letter){ alert('You clicked ' + letter); }, 
+				prefixes: ['the', 'a']
+			});
+		} 
     } // close parseXML
     
 	/* ===============================================================================================
@@ -358,17 +375,21 @@ $(document).ready(function(){
 	
 	$('a.alphaSort').click(function(mouseEvent){
 		mouseEvent.preventDefault();
-		$('ul#results').listnav({ 
-		    includeAll: false, 
-		    includeOther: true, 
-		    flagDisabled: true, 
-		    noMatchText: 'Nothing matched your filter, please click another letter.', 
-		    showCounts: false, 
-		    cookieName: 'my-main-list', 
-		    //onClick: function(letter){ alert('You clicked ' + letter); }, 
-		    prefixes: ['the','a'] 
-		});
-	 });
-	
+		if ($(this).is('.alphaSort')) {
+			var alphaSort = 1;	
+
+			$.bbq.pushState({alphaSort: alphaSort});
+			$(this).removeClass('alphaSort').addClass('alphaSorted');			
+		} else {
+			var alphaSort = 0;
+
+			$.bbq.pushState({alphaSort: alphaSort});
+			$(this).removeClass('alphaSorted').addClass('alphaSort');
+		}
+
+		return false;
+	});
+
 	$(window).trigger("hashchange");
+	
 });
