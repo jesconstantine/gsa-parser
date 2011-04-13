@@ -212,7 +212,6 @@ $(document).ready(function(){
     function parseXML(xml){	
 		//alert("parse");
 		var	toolList = [];
-			
 			subjectList = [];
 		
 		$('ul#listOfToolFilters>li').remove();
@@ -389,7 +388,69 @@ $(document).ready(function(){
 
 		return false;
 	});
+	
+	$('#query').bind('keyup', function() {
+	
+		var gsaURL = $('#gsaURL').attr('value');
+			site = $('#site').attr('value');
+			client = $('#client').attr('value');
+			output = $('#output').attr('value');
+			metaFields = $('#metaFields').attr('value');
+			num = $('#num').attr('value');
+			filter = $('#filter').attr('value');
+			query = $('#query').attr('value');
+			
+		$.ajax({
+			type: "POST",
+			url: "php/curl.php",
+			dataType: "xml",
+			data: {
+				num: num,
+				filter: filter,
+				requiredFields: requiredFields,
+				gsaURL: gsaURL,
+				query: query,
+				site: site,
+				client: client,
+				output: output,
+				metaFields: metaFields
+			},
+			success: autoXML
+		}); // close ajax
+	});
+	
+		            var myArr = [];
+            
+            
+             
+                
+             function autoXML(xml){
+                $(this).find('T').text();
+                    $(xml).find("R").each(function(){
+                        myArr.push($(this).find('T').text().trim());
+                    });
+
+                $("#query").autocomplete({
+                    source: myArr,
+                    minLength: 1,
+                    select: function(event, ui){
+                        var query = ui.item.value;
+                    }
+                });
+                }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	$(window).trigger("hashchange");
+
 	
 });
