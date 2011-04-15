@@ -9,45 +9,44 @@
         <script type="text/javascript" src="js/listnav.js"></script>
 		<script type="text/javascript" src="js/tinysort.js"></script>
 		<script type="text/javascript" src="js/hash_change.js"></script>
-		<script type="text/javascript" src="js/jquery_bbq.js"></script>        
-		<script type="text/javascript" src="js/parse.js"></script>		
-        <link type="text/css" href="css/jui-uakron/jquery-ui-1.8.11.custom.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery_bbq.js"></script>
+	<!--	<script type="text/javascript" src="js/autocomplete.js"></script> -->           
+		<script type="text/javascript" src="js/parse.js"></script>	
+		<link type="text/css" href="css/jui-uakron/jquery-ui-1.8.11.custom.css" rel="stylesheet" />
+		<link type="text/css" href="css/autocomplete.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/style.css" />
 		
     </head>
     <body>
         <div id="resultsWrapper">
-        	<input type="checkbox" id="alphaSort" /><label for="alphaSort">Alphabetical Sort</label>
-
+        	   
+		<div id="search">
+			    <form action="https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php" name="gsa" id="gsa" method="POST">
+                <input type="hidden" name="site" id="site" value="dbCrawTestULResearchTools" /><input type="hidden" name="client" id="client" value="UL_FE_01" /><input type="hidden" name="gsaURL" id="gsaURL" value="http://gsa.uakron.edu/search?" /><input type="hidden" name="output" id="output" value="xml_no_dtd" /><input type="hidden" name="num" id="num" value="1000" /><input type="hidden" name="metaFields" id="metaFields" value="*" />
+				<input type="hidden" name="requiredFields" id="requiredFields" value="" />
+				<input type="hidden" name="filter" id="filter" value="0" />
+                <label for="search">
+                    Search: 
+               
+                <input type="text" name="query" value="" id="query" /><input id="search" type="image" src="https://www.uakron.edu/libraries/bierce_scitech/global/images/template/btn_go4.gif" value="Search" /> </label>
+            </form>
         	
-            <div id="searchFilters">
-            	
+			<input type="checkbox" id="alphaSort"><label for="alphaSort">Alphabetical Sort</label></input>
+			<input class="filter" href="librarianRecommended:1" type="checkbox" id="libRec"><label for="libRec">Librarian Reccommended Only</label></input>
 	
-				
-                <div id="search">
-                    <form action="https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php" name="gsa" id="gsa" method="POST">
-                        <input type="hidden" name="site" id="site" value="dbCrawTestULResearchTools" /><input type="hidden" name="client" id="client" value="UL_FE_01" /><input type="hidden" name="gsaURL" id="gsaURL" value="http://gsa.uakron.edu/search?" /><input type="hidden" name="output" id="output" value="xml_no_dtd" /><input type="hidden" name="num" id="num" value="1000" /><input type="hidden" name="metaFields" id="metaFields" value="*" />
-						<input type="hidden" name="requiredFields" id="requiredFields" value="" />
-						<input type="hidden" name="filter" id="filter" value="0" />
-                        <label for="search">
-                            Search: 
-                        </label>
-                        <input type="text" name="query" value="" id="query" /><input id="search" type="image" src="https://www.uakron.edu/libraries/bierce_scitech/global/images/template/btn_go4.gif" value="Search" />
-                    </form>
-                </div>
+
+			<div class="clear">&nbsp;</div>
+        </div>
+		<div id="searchFilters">
                 <ul id="filters">
                     <li class="filterGroup" id="activeFilterContainer">
                         Active Filters:
                         <ul id="activeFilters" class="filterList">
                         </ul>
                     </li>
-					<a href="javascript:;" id="reset">Reset search &amp; filters</a>
 					<p id="filterResults">
 						Filter your results:
 					</p>
-                    <li class="filterGroup">
-                        <a id="libRec" class="filter" href="librarianRecommended:1">Librarian Recommended Only</a>
-                    </li>
                     <li class="filterGroup" id="toolFilters">
                         <a href="javascript:;" class="up slide">Filter by Tool Type:</a>
                         <ul id="listOfToolFilters" class="filterList">
@@ -63,7 +62,7 @@
                 </ul>
             </div>
             <div id="content">
-             <div id="myList-nav"></div> 
+             <div id="results-nav"></div> 
             </div>
         </div>
     </body>

@@ -55,6 +55,8 @@
 
 div#search {
     margin-bottom: 20px;
+	height:50px;
+	width:100%;
 }
 
 input#search {
@@ -113,6 +115,7 @@ span.librarianRecommended {
     font-style: italic;
     font-weight: bold;
     margin-left: 20px;
+
 }
 
 span.librarianRecommended img {
@@ -160,4 +163,17 @@ a.slide {
 .ui-autocomplete {
 	height:200px;
 	overflow-y:scroll;
+}
+
+#gsa, #alphaSort, #libRec {
+	float:left;
+	margin-right:10px;
+}
+
+label {
+	width:auto !important;
+}
+
+div.clear {
+	clear:both;
 }
