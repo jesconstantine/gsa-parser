@@ -11,12 +11,15 @@
 		<script type="text/javascript" src="js/hash_change.js"></script>
 		<script type="text/javascript" src="js/jquery_bbq.js"></script>        
 		<script type="text/javascript" src="js/parse.js"></script>		
-		<link type="text/css" href="css/jui-uakron/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css" />
+        <link type="text/css" href="css/jui-uakron/jquery-ui-1.8.11.custom.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		
     </head>
     <body>
         <div id="resultsWrapper">
-        	<a href="javascript:;" class="alphaSort">Sort Alphabetically</a>
+        	<input type="checkbox" id="alphaSort" /><label for="alphaSort">Alphabetical Sort</label>
+
+        	
             <div id="searchFilters">
             	
 	
@@ -42,8 +45,8 @@
 					<p id="filterResults">
 						Filter your results:
 					</p>
-                    <li class="filterGroup" id="libRec">
-                        <a class="filter" href="librarianRecommended:1">Librarian Recommended Only</a>
+                    <li class="filterGroup">
+                        <a id="libRec" class="filter" href="librarianRecommended:1">Librarian Recommended Only</a>
                     </li>
                     <li class="filterGroup" id="toolFilters">
                         <a href="javascript:;" class="up slide">Filter by Tool Type:</a>

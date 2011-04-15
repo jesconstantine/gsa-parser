@@ -68,6 +68,7 @@ input#search {
 
 ul#filters li.filterGroup {
     margin: 0 0 20px 0;
+	text-transform:capitalize;
 }
 
 ul#filters ul#activeFilters li.filterGroup {
@@ -154,4 +155,9 @@ a.slide {
     background-image: url(../img/down_arrow.png);
     background-position: left;
     background-repeat: no-repeat;
+}
+
+.ui-autocomplete {
+	height:200px;
+	overflow-y:scroll;
 }
