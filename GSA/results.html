@@ -20,32 +20,27 @@
     <body>
         <div id="resultsWrapper">
         	   
-		<div id="search">
-			    <form action="https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php" name="gsa" id="gsa" method="POST">
+		<div id="searchFilters">
+						    <form action="https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php" name="gsa" id="gsa" method="POST">
                 <input type="hidden" name="site" id="site" value="dbCrawTestULResearchTools" /><input type="hidden" name="client" id="client" value="UL_FE_01" /><input type="hidden" name="gsaURL" id="gsaURL" value="http://gsa.uakron.edu/search?" /><input type="hidden" name="output" id="output" value="xml_no_dtd" /><input type="hidden" name="num" id="num" value="1000" /><input type="hidden" name="metaFields" id="metaFields" value="*" />
 				<input type="hidden" name="requiredFields" id="requiredFields" value="" />
 				<input type="hidden" name="filter" id="filter" value="0" />
                 <label for="search">
-                    Search: 
+                  <strong>  Search:</strong> </label>
                
-                <input type="text" name="query" value="" id="query" /><input id="search" type="image" src="https://www.uakron.edu/libraries/bierce_scitech/global/images/template/btn_go4.gif" value="Search" /> </label>
+                <input type="text" name="query" value="" id="query" /><input id="search" type="image" src="https://www.uakron.edu/libraries/bierce_scitech/global/images/template/btn_go4.gif" value="Search" /> 
             </form>
-        	
-			<input type="checkbox" id="alphaSort"><label for="alphaSort">Alphabetical Sort</label></input>
-			<input class="filter" href="librarianRecommended:1" type="checkbox" id="libRec"><label for="libRec">Librarian Reccommended Only</label></input>
-	
-
-			<div class="clear">&nbsp;</div>
-        </div>
-		<div id="searchFilters">
                 <ul id="filters">
                     <li class="filterGroup" id="activeFilterContainer">
-                        Active Filters:
+                        <strong>                        	
+                        Active Filters:</strong>
                         <ul id="activeFilters" class="filterList">
                         </ul>
                     </li>
+					
 					<p id="filterResults">
-						Filter your results:
+						<a href="javascript:;" id="reset">Reset Search &amp; Filters</a>
+						<strong>Filter your results:</strong>
 					</p>
                     <li class="filterGroup" id="toolFilters">
                         <a href="javascript:;" class="up slide">Filter by Tool Type:</a>
@@ -61,7 +56,11 @@
                     </li>
                 </ul>
             </div>
-            <div id="content">
+
+			<div id="content">
+			            <a class="onoff" href="javascript:;" id="alphaSort">Alphabetical Sort</a>
+			<a class="filter onoff" href="librarianRecommended:1" id="libRec">Librarian Recommended Only</a>
+            <div class="clear">&nbsp;</a>			
              <div id="results-nav"></div> 
             </div>
         </div>
