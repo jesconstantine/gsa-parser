@@ -88,7 +88,11 @@ ul#filters ul.filterList li {
 }
 
 ul#activeFilters ul.filterList {
-    padding: 5px 0 0 0;
+    padding: 8px 0 0 0;
+}
+
+ul#filters ul.filterList li a {
+	display:block;
 }
 
 li#activeFilterContainer ul#activeFilters {
@@ -122,6 +126,10 @@ span.librarianRecommended img {
     margin-right: 5px;
 }
 
+ul#results {
+	display:none;
+}
+
 div#resultsWrapper {
     width: 945px;
 }
@@ -145,7 +153,23 @@ img {
 
 a.slide {
     display: block;
-    padding-left: 22px;
+}
+/*
+ul#filters ul.filterList li a {
+	display:block;
+	padding:5px;
+	background-color:#003499;
+	border:2px solid #003499;
+	color:white;
+	font-weight:bold;
+	margin:2px 0 2px 0;
+	text-decoration:none;
+	text-align:center;
+}
+
+ul#filters ul.filterList li a:hover {
+	background-color:#ffffff;
+	color:#003499;
 }
 
 .up {
@@ -164,8 +188,8 @@ a.slide {
 	height:200px;
 	overflow-y:scroll;
 }
-
-#gsa, #alphaSort, #libRec {
+*/
+#alphaSort, #libRec {
 	float:left;
 	margin-right:10px;
 }
@@ -176,4 +200,8 @@ label {
 
 div.clear {
 	clear:both;
+}
+
+a#reset {
+	display:block;
 }

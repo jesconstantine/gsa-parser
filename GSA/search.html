@@ -1,13 +1,275 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title></title>
-</head>
-<body>
-	<form action="results.html">
-		<label for="query"><input id="query" name="query" type="text" value="" /></label>
-		<input type="submit" value="Submit" />
-	</form>
-</body>
-</html>
+<div id="accordion">
+    <div>
+        #pullContent('+structureInode:628000 +text13:"Spring"  +text12:"General Hours" AND (text6:"Bierce Library" OR text6:"Science Library" OR text6:"Archival Services") +languageId:1 +deleted:false +live:true' '5' 'text7')<h3><a href="#">$!content.semester0 - $!content.semester1</a></h3>
+        <div>
+            <table class="lib">
+                <tbody>
+                    <tr>
+                        <th class="blue">
+                            Day / Location
+                        </th>
+                        #foreach($!content in $!list)
+                        <th class="blue">
+                            $!content.libraryServiceAreas
+                        </th>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Monday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.monday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Tuesday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.tuesday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Wednesday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.wednesday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Thursday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.thursday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Friday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.friday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Saturday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.saturday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Sunday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.sunday
+                        </td>
+                        #end
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        #pullContent('+structureInode:628000 +text13:"Spring"  +text12:"Spring Break Week" AND (text6:"Bierce Library" OR text6:"Science Library" OR text6:"Archival Services") +languageId:1 +deleted:false +live:true' '5' 'text7')<h3><a href="#">$!content.semester0 - $!content.semester1</a></h3>
+        <div>
+            <table class="lib">
+                <tbody>
+                    <tr>
+                        <th class="blue">
+                            Day / Location
+                        </th>
+                        #foreach($!content in $!list)
+                        <th class="blue">
+                            $!content.libraryServiceAreas
+                        </th>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Monday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.monday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Tuesday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.tuesday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Wednesday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.wednesday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Thursday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.thursday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Friday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.friday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Saturday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.saturday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Sunday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.sunday
+                        </td>
+                        #end
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        #pullContent('+structureInode:628000 +text13:"Spring"  +text12:"Pre-Exam Week Extended Hours" AND (text6:"Bierce Library" OR text6:"Science Library" OR text6:"Archival Services") +languageId:1 +deleted:false +live:true' '5' 'text7')<h3><a href="#">$!content.semester0 - $!content.semester1</a></h3>
+        <div>
+            <table class="lib">
+                <tbody>
+                    <tr>
+                        <th class="blue">
+                            Day / Location
+                        </th>
+                        #foreach($!content in $!list)
+                        <th class="blue">
+                            $!content.libraryServiceAreas
+                        </th>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Monday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.monday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Tuesday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.tuesday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Wednesday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.wednesday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Thursday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.thursday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Friday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.friday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Saturday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.saturday
+                        </td>
+                        #end
+                    </tr>
+                    <tr>
+                        <td class="blue">
+                            Sunday
+                        </td>
+                        #foreach($!content in $!list)
+                        <td>
+                            $!content.sunday
+                        </td>
+                        #end
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+	
+
+	
+</div>
+$date.format('yyyy.MM.dd', $!content.startDate)
+$date.format('MM/dd/yyyy', $content.endSeason)
+: $!content.startDate - $!content.endDate

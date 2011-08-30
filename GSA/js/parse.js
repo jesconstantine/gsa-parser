@@ -91,7 +91,7 @@ $(document).ready(function(){
 			
 			$.each(requiredFieldsArray, function(itemIndex, filterHREF){
 				
-				var filterName = filterHREF.replace(/%20/g, ' ').replace('research:', '').replace('subject:', '');
+				var filterName = filterHREF.replace(/%20/g, ' ').replace('research:', '').replace(/and/g, '\&amp\;').replace('subject:', '');
 					listItem = '<li><a class="filter active" href="' + filterHREF + '">' + filterName + '</a></li>';
 				if (filterHREF != 'librarianRecommended:1') {
 					$('ul#activeFilters').append(listItem);
@@ -112,6 +112,7 @@ $(document).ready(function(){
 			
 		}
 		getResults (query, requiredFields);
+		
 	});
 
 	/*================================================================================================
@@ -137,7 +138,7 @@ $(document).ready(function(){
 			
 		$.ajax({
 			type: "POST",
-			url: "https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php",
+			url: "php/curl.php",
 			dataType: "xml",
 			data: {
 				num: num,
@@ -150,7 +151,10 @@ $(document).ready(function(){
 				output: output,
 				metaFields: metaFields
 			},
-			success: parseXML
+			success: parseXML,
+			complete: function(){
+				$('#results').fadeIn(1500)
+			}
 		}); // close ajax
 	}
 	
@@ -312,7 +316,7 @@ $(document).ready(function(){
 
 		// loops through the array of research tool types
 		$.each(toolList, function(itemIndex, toolHREF){
-			var	toolName = toolHREF.replace(/%20/g, ' ').replace('research:', '').toLowerCase(); //URL encodes spaces		
+			var	toolName = toolHREF.replace(/%20/g, ' ').replace('research:', '').replace(/and/g, '\&amp\;').toLowerCase(); //URL encodes spaces		
 				listItem = '<li><a class="filter" href="' + toolHREF + '">' + toolName + '</a></li>';
 				
 			$('#listOfToolFilters').append(listItem);
@@ -320,8 +324,9 @@ $(document).ready(function(){
 		
 		// loops through the array of research tool types
 		$.each(subjectList, function(itemIndex, subjectHREF){
-			var	subjectName = subjectHREF.replace(/%20/g, ' ').replace('subject:', '').toLowerCase(); //URL encodes spaces		
+			var	subjectName = subjectHREF.replace(/%20/g, ' ').replace('subject:', '').replace(/and/g, '\&amp\;').toLowerCase(); //URL encodes spaces		
 				listItem = '<li><a class="filter" href="' + subjectHREF + '">' + subjectName + '</a></li>';
+
 				
 			$('#listOfSubjectFilters').append(listItem);
 		});
@@ -336,11 +341,12 @@ $(document).ready(function(){
 		 */
 		
 		if (window.location.href.indexOf("alphaSort=1") !== -1) {
+			$('ul#results>li').tinysort();
 			$('ul#results').listnav({
 				includeAll: false,
 				includeOther: true,
 				flagDisabled: true,
-				noMatchText: 'Nothing matched your filter, please click another letter.',
+				noMatchText: 'Nothing matched your filter; please click another letter.',
 				showCounts: false,
 				cookieName: 'my-main-list',
 				prefixes: ['the', 'a']
@@ -352,14 +358,27 @@ $(document).ready(function(){
 	 * FILTER LIST SLIDE FUNCTION																	 * 
 	 =============================================================================================== */
 	
-	$('a.slide').addClass('up').parent().children('ul').slideUp();
+	$('a.slide').button({
+            icons: {
+                primary: "ui-icon-circle-triangle-e"
+            }
+	}).addClass('up').parent().children('ul').slideUp();
 	$('a.slide').click(function(mouseEvent){
 		mouseEvent.preventDefault();
 		
 		if ($(this).is('.up')) {
-			$(this).removeClass('up').addClass('down').parent().children('ul').slideDown();
+			$(this).button({
+            icons: {
+                	primary: "ui-icon-circle-triangle-s"
+            	}
+			}).removeClass('up').addClass('down').parent().children('ul').slideDown();
+			
 		} else {			
-			$(this).removeClass('down').addClass('up').parent().children('ul').slideUp();
+			$(this).button({
+            icons: {
+                	primary: "ui-icon-circle-triangle-e"
+            	}
+			}).removeClass('down').addClass('up').parent().children('ul').slideUp();
 		}
 		return false;
 	});
@@ -368,18 +387,35 @@ $(document).ready(function(){
 	 * Librarian Recommended Function																	 * 
 	 =============================================================================================== */
 
-	$('#libRec').button();
-	$('#libRec').click(function(mouseEvent){
+	
+	$('#libRec').button({
+		icons: {
+			primary: "ui-icon-circle-close"
+		}
+	}).click(function(mouseEvent){
 		mouseEvent.preventDefault();
 		var itemID = $(this).attr('href');
 
-		if ($(this).is('.active')) {
+		if ($(this).is('.active')) {		
+			$('#libRec').button({
+				icons: {
+					primary: "ui-icon-circle-close"
+				}
+			});
 			removePeriod(itemID, requiredFields);
 			$(this).removeClass('active');
-			
+			//$(this).text("Show Only Library Recommended Resources").css('color', '#003499');	
 		} else {
+			
+			$('#libRec').button({
+				icons: {
+					primary: "ui-icon-circle-check"
+				}
+			});
+			
 			addPeriod(itemID, requiredFields);
-			$(this).addClass('active');				
+			$(this).addClass('active');
+			//$(this).text("Only Showing Library Recommended Resources").css('color', '#467E51');		
 		}		
 		return false;
 	});
@@ -387,16 +423,30 @@ $(document).ready(function(){
 	/* ===============================================================================================
 	 * Alphabetical sort control  
 	 =============================================================================================== */
-	
-	$('#alphaSort').button();
-    $('#alphaSort').click(function(mouseEvent){
+    $('#alphaSort').button({
+		icons: {
+			primary: "ui-icon-circle-close"
+		}
+	}).click(function(mouseEvent){
             mouseEvent.preventDefault();
             if (window.location.href.indexOf("alphaSort=1") !== -1) {
-                    var alphaSort = 0;      
-                    $.bbq.pushState({alphaSort: alphaSort});
+				
+				$('#alphaSort').button({
+					icons: {
+						primary: "ui-icon-circle-close"
+					}
+				});
+				
+                var alphaSort = 0;      
+                $.bbq.pushState({alphaSort: alphaSort});					
             } else {
                     var alphaSort = 1;
                     $.bbq.pushState({alphaSort: alphaSort});
+					$('#alphaSort').button({
+					icons: {
+						primary: "ui-icon-circle-check"
+					}
+					});
             }
             return false;
     });
@@ -438,14 +488,39 @@ $(document).ready(function(){
 		$.bbq.pushState({query: query, requiredFields: requiredFields});	
 	}
 	
+	
+	$('a#reset').button({icons: {
+         primary: "ui-icon-arrowrefresh-1-e"
+            }
+	}).click(function(mouseEvent){
+		mouseEvent.preventDefault();
+
+		query = ('');
+		requiredFields = ('');
+		alphaSort = 0;
+		$('#query').val(''); 
+		$('#results').remove();
+		$('#results-nav').remove();
+		$('#spelling').remove();
+
+	        $('a.slide').button({
+                     icons: {
+                	primary: "ui-icon-circle-triangle-e"
+            	}
+			}).removeClass('down').addClass('up').parent().children('ul').slideUp();
+
+		$.bbq.pushState({query: query, requiredFields: requiredFields, alphaSort: alphaSort});   
+		
+		return false;
+    });
+
+	
 	/* ===============================================================================================
 	 * 	Ajax's to the GSA to get autocomplete options											     * 
 	 =============================================================================================== */
-	
+	/*
 
-      
-
-          
+ 	var myArr = [];         
     $('#query').keyup(function(e){
 		if (e.keyCode != 37 && e.keyCode != 38 && e.keyCode != 39 && e.keyCode != 40) {
 	        var gsaURL = $('#gsaURL').attr('value');
@@ -456,7 +531,6 @@ $(document).ready(function(){
 		        num = $('#num').attr('value');
 		        filter = $('#filter').attr('value');
 		        query = $('#query').attr('value');
-	        
 	        $.ajax({
 	            type: "POST",
 	            url: "https://www.uakron.edu/applications/search/libraries/researchTools/gsa_curl.php",
@@ -472,57 +546,32 @@ $(document).ready(function(){
 	                output: output,
 	                metaFields: metaFields
 	            },
-	            success: autoXML
-	        }); // close ajax
- 		}
-		
-		 var myArr = [];
-		   
-    function autoXML(xml){
-        $(this).find('T').text();
-        $(xml).find("R").each(function(){
-            myArr.push($(this).find('T').text().replace(/<b>/g, '').replace(/<\/b>/g, '').replace(/&#39;/, "'").replace(/\&amp;/g, '&'));
-			$(this).find('MT:[N="research"]').each(function(){
-				myArr.push($(this).attr('V'));		 								
-			}); // close toolTypes
-			$(this).find('MT:[N="subject"]').each(function(){
-				myArr.push($(this).attr('V'));		 								
-			}); // close toolTypes
-			
-        });
-        myArr = removeDuplicateElement(myArr);
-        
-	/*	console.log(myArr);
-		$("#query").autocomplete(myArr, {
-			autoFill: false,
-			highlightItem: false,
-			delay:0,
-			selectFirst:false
-		}); */ 
-		
-		$("#query").autocomplete({
-            source: myArr,
-            minLength: 0,
-			delay: 0,
-            select: function(event, ui){
-                var query = ui.item.value;
-				$.bbq.pushState({ query: query, requiredFields: requiredFields });	
-            }
-        });
-		
-    }
-		
+	            success: function autoXML(xml){
+        					$(xml).find("R").each(function(){
+					            myArr.push($(this).find('T').text().replace(/<b>/g, '').replace(/<\/b>/g, '').replace(/&#39;/, "'").replace(/\&amp;/g, '&'));
+								$(this).find('MT:[N="research"]').each(function(){
+									myArr.push($(this).attr('V'));		 								
+								}); // close toolTypes
+								$(this).find('MT:[N="subject"]').each(function(){
+									myArr.push($(this).attr('V'));		 								
+								}); // close toolTypes
+       						}); //close xml
+							myArr = removeDuplicateElement(myArr);
+							$("#query").autocomplete({
+					            source: myArr,
+					            minLength: 0,
+								delay: 0,
+					            select: function(event, ui){
+					                var query = ui.item.value;
+									$.bbq.pushState({ query: query, requiredFields: requiredFields });	
+					            }
+							});  // close autocomplete
+    					} // close autoxml
+	        }); // close ajax   
+		} // close if
     });
-	
-	
-    
-	/* ===============================================================================================
-	 * 	Autocomplete widget setup													     			 * 
-	 =============================================================================================== */
-	
-   
-	
-	$(window).trigger("hashchange");
+   */
+  
 
-	
+	$(window).trigger("hashchange");
 });
