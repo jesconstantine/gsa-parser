@@ -1,0 +1,1 @@
+Parses XML search results, returned by the GSA, into HTML.
